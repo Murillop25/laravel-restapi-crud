@@ -12,22 +12,9 @@ class studentController extends Controller
     public function index()
     {
         $students = Student::all();
-
-        // if ($students->isEmpty()) {
-        //     $data = [
-        //         'message' => 'No se encontraron estudiantes',
-        //         'status' => 200
-        //     ];
-        //     return response()->json($data, 404);
-        // }
-
-        $data = [
-            'students' => $students,
-            'status' => 200
-        ];
-
-        return response()->json($data, 200);
+        return view('students.index', compact('students'));
     }
+    
 
     public function store(Request $request)
     {
