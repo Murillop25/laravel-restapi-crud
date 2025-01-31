@@ -1,3 +1,7 @@
+@php
+    use Carbon\Carbon;
+@endphp
+
 @extends('layouts.app')
 
 @section('content')
@@ -13,6 +17,7 @@
                 <th>Teléfono</th>
                 <th>Idioma</th>
                 <th>Fecha de Creación</th>
+                <th>Fecha de Actualización</th>
             </tr>
         </thead>
         <tbody>
@@ -23,11 +28,12 @@
                     <td>{{ $student->email }}</td>
                     <td>{{ $student->phone }}</td>
                     <td>{{ $student->language }}</td>
-                    <td>{{ $student->created_at->format('d/m/Y') }}</td>
+                    <td>{{ $student->created_at->format('d/m/Y H:i') }}</td>
+                    <td>{{ Carbon::parse($student->updated_at)->format('d/m/Y H:i') }}</td>
                 </tr>
             @empty
                 <tr>
-                    <td colspan="6" class="text-center">No hay estudiantes registrados</td>
+                    <td colspan="7" class="text-center">No hay estudiantes registrados</td>
                 </tr>
             @endforelse
         </tbody>
