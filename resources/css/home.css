@@ -1,0 +1,5 @@
+.image-container img {
+    max-width: 80%; /* Ajusta el tamaño de la imagen */
+    height: auto; /* Mantiene la proporción */
+    border-radius: 10px; /* Si quieres bordes redondeados */
+}
