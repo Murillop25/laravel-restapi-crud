@@ -17,10 +17,15 @@ class studentController extends Controller
     
     public function showStudent()
     {
+    try {
         // Obtén todos los estudiantes
         $students = Student::all();
         
         return view('students.showStudent', compact('students'));
+    } catch (\Exception $e) {
+        // Manejo de errores
+        return response()->json(['error' => 'Error al obtener la lista de estudiantes'], 500);
+    }
     }
 
     public function showCreateForm()
@@ -28,6 +33,18 @@ class studentController extends Controller
     // Retorna la vista para crear un nuevo estudiante
     return view('students.newStudent');
     }
+
+  // Muestra el formulario de creación de estudiante dentro del modal
+   public function modalCreate()
+   {
+        return view('students.modalCreateStudent');
+   }
+  
+   public function modalUpdate($id)
+   {
+      $student = Student::findOrFail($id);
+      return view('students.modalUpdateStudent', compact('student'));
+   }
 
     public function store(Request $request)
     {
@@ -39,14 +56,15 @@ class studentController extends Controller
             'language' => 'required|in:English,Spanish,French',
         ]);
     
-        // Si la validación falla, redirige de vuelta con los errores
+        // Si la validación falla, devuelve un error en formato JSON
         if ($validator->fails()) {
-            return redirect()->back()
-                             ->withErrors($validator)
-                             ->withInput();
+            return response()->json([
+                'success' => false,
+                'message' => 'Error en los datos del formulario.',
+            ]);
         }
     
-        // Crear el estudiante en la base de datos
+        // Crear el estudiante
         $student = Student::create([
             'name' => $request->name,
             'email' => $request->email,
@@ -54,14 +72,20 @@ class studentController extends Controller
             'language' => $request->language,
         ]);
     
-        // Si la creación falla, redirige con un mensaje de error
-        if (!$student) {
-            return redirect()->route('students.showStudent')->with('error', 'Error al crear el estudiante.');
+        // Verificar si la creación fue exitosa
+        if ($student) {
+            return response()->json([
+                'success' => true,
+                'message' => 'Estudiante creado correctamente.',
+            ]);
+        } else {
+            return response()->json([
+                'success' => false,
+                'message' => 'Hubo un problema al crear el estudiante.',
+            ]);
         }
-    
-        // Redirige a la vista de estudiantes con un mensaje de éxito
-        return redirect()->route('students.showStudent')->with('success', 'Estudiante creado correctamente.');
     }
+    
     public function show($id)
     {
         $student = Student::find($id);
@@ -83,17 +107,17 @@ class studentController extends Controller
     }
 
     public function destroy($id)
-{
-    $student = Student::find($id);
-
-    if (!$student) {
-        return redirect()->route('students.showStudent')->with('error', 'Estudiante no encontrado.');
-    }
+    {
+        $student = Student::find($id);
     
-    $student->delete();
-
-    return redirect()->route('students.showStudent')->with('success', 'Estudiante eliminado correctamente.');
-}
+        if (!$student) {
+            return redirect()->route('students.show')->with('error', 'Estudiante no encontrado.');
+        }
+        
+        $student->delete();
+    
+        return redirect()->route('students.show')->with('success', 'Estudiante eliminado correctamente.');
+    }
 
 
     public function update(Request $request, $id)
@@ -141,60 +165,60 @@ class studentController extends Controller
 
     }
 
-    public function updatePartial(Request $request, $id)
-    {
-        $student = Student::find($id);
+    // public function updatePartial(Request $request, $id)
+    // {
+    //     $student = Student::find($id);
 
-        if (!$student) {
-            $data = [
-                'message' => 'Estudiante no encontrado',
-                'status' => 404
-            ];
-            return response()->json($data, 404);
-        }
+    //     if (!$student) {
+    //         $data = [
+    //             'message' => 'Estudiante no encontrado',
+    //             'status' => 404
+    //         ];
+    //         return response()->json($data, 404);
+    //     }
 
-        $validator = Validator::make($request->all(), [
-            'name' => 'max:255',
-            'email' => 'email|unique:student',
-            'phone' => 'digits:10',
-            'language' => 'in:English,Spanish,French'
-        ]);
+    //     $validator = Validator::make($request->all(), [
+    //         'name' => 'max:255',
+    //         'email' => 'email|unique:student',
+    //         'phone' => 'digits:10',
+    //         'language' => 'in:English,Spanish,French'
+    //     ]);
 
-        if ($validator->fails()) {
-            $data = [
-                'message' => 'Error en la validación de los datos',
-                'errors' => $validator->errors(),
-                'status' => 400
-            ];
-            return response()->json($data, 400);
-        }
+    //     if ($validator->fails()) {
+    //         $data = [
+    //             'message' => 'Error en la validación de los datos',
+    //             'errors' => $validator->errors(),
+    //             'status' => 400
+    //         ];
+    //         return response()->json($data, 400);
+    //     }
 
-        if ($request->has('name')) {
-            $student->name = $request->name;
-        }
+    //     if ($request->has('name')) {
+    //         $student->name = $request->name;
+    //     }
 
-        if ($request->has('email')) {
-            $student->email = $request->email;
-        }
+    //     if ($request->has('email')) {
+    //         $student->email = $request->email;
+    //     }
 
-        if ($request->has('phone')) {
-            $student->phone = $request->phone;
-        }
+    //     if ($request->has('phone')) {
+    //         $student->phone = $request->phone;
+    //     }
 
-        if ($request->has('language')) {
-            $student->language = $request->language;
-        }
+    //     if ($request->has('language')) {
+    //         $student->language = $request->language;
+    //     }
 
-        $student->save();
+    //     $student->save();
 
-        $data = [
-            'message' => 'Estudiante actualizado',
-            'student' => $student,
-            'status' => 200
-        ];
+    //     $data = [
+    //         'message' => 'Estudiante actualizado',
+    //         'student' => $student,
+    //         'status' => 200
+    //     ];
 
-        return response()->json($data, 200);
-    }
+    //     return response()->json($data, 200);
+    // }
 
 
 }

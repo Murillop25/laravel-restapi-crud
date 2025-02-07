@@ -4,9 +4,9 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\StudentController;
 
-Route::get('/', function () {
-    return view('home');
-});
+// Route::get('/', function () {
+//     return view('home');
+// });
 
 // Ruta principal, muestra la página de inicio
 Route::get('/', [HomeController::class, 'index']);
@@ -17,16 +17,17 @@ Route::get('students/show', [StudentController::class, 'showStudent'])->name('st
 // Ruta para eliminar un estudiante de la base de datos
 Route::delete('/students/{id}', [StudentController::class, 'destroy'])->name('students.destroy');
 
-// Ruta para redirigir a la vista de los estudiantes después de eliminar uno
-Route::get('/students', [StudentController::class, 'showStudent'])->name('students.showStudent');
-
-// Ruta para mostrar el formulario de creación de estudiante
-Route::get('/students/create', [StudentController::class, 'showCreateForm'])->name('students.create');
+// Ruta para mostrar el formulario de creación de estudiante dentro de un modal
+Route::get('/students/create', [StudentController::class, 'modalCreate'])->name('students.create');
 
 // Ruta para procesar y crear un nuevo estudiante
 Route::post('/students', [StudentController::class, 'store'])->name('students.store');
 
+// Ruta para mostrar el formulario de edición de estudiante dentro de un modal
+Route::get('/students/{id}/edit', [StudentController::class, 'modalUpdate'])->name('students.edit');
 
+// Ruta para actualizar un estudiante
+Route::put('/students/{id}', [StudentController::class, 'update'])->name('students.update');
 // Route::get('/students/create', [StudentController::class, 'create'])->name('students.create');
 // Route::get('/students', [StudentController::class, 'show']);
 // // Ruta para mostrar todos los estudiantes

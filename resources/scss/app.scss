@@ -1,0 +1,18 @@
+// 1. Sobrescribe variables de Bootstrap
+// $primary: #f15bb5 !default; 
+// $body-bg: #fafafa !default;
+
+// 2. Importa Bootstrap
+// resources/scss/app.scss
+// resources/scss/app.scss
+@import 'bootstrap/scss/bootstrap';
+// 3. Añade tus estilos personalizados
+.image-container img {
+    max-width: 80%; /* Ajusta el tamaño de la imagen */
+    height: auto; /* Mantiene la proporción */
+    border-radius: 10px; /* Si quieres bordes redondeados */
+}
+
+body {
+    font-family: 'Nunito', sans-serif;
+}
