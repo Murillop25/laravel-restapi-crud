@@ -21,14 +21,13 @@
             <div class="collapse navbar-collapse" id="navbarNav">
                 <ul class="navbar-nav ms-auto">
                     <li class="nav-item">
-                        <a class="nav-link active" aria-current="page" href="{{ url('/') }}">Inicio</a>
+                        <a class="nav-link {{ Route::currentRouteName() == 'home' ? 'active' : '' }}" aria-current="page" href="{{ url('/') }}">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        {{-- <a class="nav-link" href="{{ route('students.show') }}">Ver Estudiantes</a> --}}
-                        <a class="nav-link" href="{{ route('students.show') }}">Ver Estudiantes</a>
+                        <a class="nav-link {{ Route::currentRouteName() == 'students.show' ? 'active' : '' }}" href="{{ route('students.show') }}">Ver Estudiantes</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('students.create') }}">Crear Estudiante</a>
+                        <a class="nav-link {{ Route::currentRouteName() == 'students.create' ? 'active' : '' }}" href="{{ route('students.create') }}">Crear Estudiante</a>
                     </li>
                     <li class="nav-item">
                         {{-- <form action="{{ route('students.destroy', ['id' => 1]) }}" method="POST" style="display:inline;"> --}}
