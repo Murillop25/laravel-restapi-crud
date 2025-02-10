@@ -24,15 +24,11 @@
                         <a class="nav-link active" aria-current="page" href="{{ url('/') }}">Inicio</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="{{ route('students.create') }}">Crear Estudiante</a>
-                    </li>
-                    <li class="nav-item">
                         {{-- <a class="nav-link" href="{{ route('students.show') }}">Ver Estudiantes</a> --}}
                         <a class="nav-link" href="{{ route('students.show') }}">Ver Estudiantes</a>
                     </li>
                     <li class="nav-item">
-                        {{-- <a class="nav-link" href="{{ route('students.update', ['id' => 1]) }}">Actualizar Estudiante</a> --}}
-                        <a class="nav-link" href="">Actualizar Estudiante</a>
+                        <a class="nav-link" href="{{ route('students.create') }}">Crear Estudiante</a>
                     </li>
                     <li class="nav-item">
                         {{-- <form action="{{ route('students.destroy', ['id' => 1]) }}" method="POST" style="display:inline;"> --}}
@@ -44,7 +40,6 @@
                     </li>
                 </ul>
             </div>
-            
         </div>
     </nav>
     

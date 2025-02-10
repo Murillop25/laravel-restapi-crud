@@ -54,7 +54,7 @@
                     <td>{{ $student->language }}</td>
                     <td>
                         <div class="d-flex gap-2">
-                            <a href="" class="btn btn-warning w-60">Editar</a>
+                            <a href="{{ route('students.updateForm', $student->id) }}" class="btn btn-warning">Actualizar</a>
                             <form action="{{ route('students.destroy', $student->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este estudiante?');" class="w-100">
                                 @csrf
                                 @method('DELETE')

@@ -35,7 +35,7 @@ class studentController extends Controller
         $validator = Validator::make($request->all(), [
             'name' => 'required|max:255',
             'email' => 'required|email|unique:student,email',
-            'phone' => 'required|digits:10',
+            'phone' => 'required|digits:8',
             'language' => 'required|in:English,Spanish,French',
         ]);
     
@@ -96,49 +96,32 @@ class studentController extends Controller
 }
 
 
+    // Mostrar el formulario de actualización de estudiante
+    public function showUpdateForm($id)
+    {
+        $student = Student::findOrFail($id);
+        return view('students.uptStudent', compact('student'));
+    }
+
+    // Actualizar un estudiante
     public function update(Request $request, $id)
     {
-        $student = Student::find($id);
-
-        if (!$student) {
-            $data = [
-                'message' => 'Estudiante no encontrado',
-                'status' => 404
-            ];
-            return response()->json($data, 404);
-        }
-
-        $validator = Validator::make($request->all(), [
-            'name' => 'required|max:255',
-            'email' => 'required|email|unique:student',
-            'phone' => 'required|digits:10',
-            'language' => 'required|in:English,Spanish,French'
+        $request->validate([
+            'name' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:student,email,' . $id,
+            'phone' => 'required|digits:8',
+            'language' => 'required|string|max:255',
         ]);
 
-        if ($validator->fails()) {
-            $data = [
-                'message' => 'Error en la validación de los datos',
-                'errors' => $validator->errors(),
-                'status' => 400
-            ];
-            return response()->json($data, 400);
-        }
+        $student = Student::findOrFail($id);
+        $student->update([
+            'name' => $request->name,
+            'email' => $request->email,
+            'phone' => $request->phone,
+            'language' => $request->language,
+        ]);
 
-        $student->name = $request->name;
-        $student->email = $request->email;
-        $student->phone = $request->phone;
-        $student->language = $request->language;
-
-        $student->save();
-
-        $data = [
-            'message' => 'Estudiante actualizado',
-            'student' => $student,
-            'status' => 200
-        ];
-
-        return response()->json($data, 200);
-
+        return redirect()->route('students.show')->with('success', 'Estudiante actualizado exitosamente');
     }
 
     public function updatePartial(Request $request, $id)

@@ -26,7 +26,11 @@ Route::get('/students/create', [StudentController::class, 'showCreateForm'])->na
 // Ruta para procesar y crear un nuevo estudiante
 Route::post('/students', [StudentController::class, 'store'])->name('students.store');
 
+// Ruta para mostrar el formulario de actualización de estudiante
+Route::get('/students/update/{id}', [StudentController::class, 'showUpdateForm'])->name('students.updateForm');
 
+// Ruta para procesar y actualizar un estudiante
+Route::put('/students/{id}', [StudentController::class, 'update'])->name('students.update');
 // Route::get('/students/create', [StudentController::class, 'create'])->name('students.create');
 // Route::get('/students', [StudentController::class, 'show']);
 // // Ruta para mostrar todos los estudiantes
