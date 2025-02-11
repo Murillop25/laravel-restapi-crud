@@ -1,4 +1,4 @@
-<!-- resources/views/students/newStudent.blade.php -->
+{{-- <!-- resources/views/students/newStudent.blade.php -->
 @extends('layouts.app')
 
 @section('content')
@@ -42,4 +42,4 @@
         <button type="submit" class="btn btn-success">Guardar</button>
     </form>
 </div>
-@endsection
+@endsection --}}
