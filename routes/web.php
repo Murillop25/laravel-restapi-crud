@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\StudentController;
+use Illuminate\Support\Facades\Auth;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
 
@@ -39,3 +40,6 @@ Route::put('/students/{id}', [StudentController::class, 'update'])->name('studen
 // Route::put('/students/{id}', [StudentController::class, 'update'])->name('students.update');
 // // Route::put('/students/{id}', [StudentController::class, 'update'])->name('students.update');
 // Route::delete('/students/destroy/{id}', [StudentController::class, 'destroy'])->name('students.destroy');
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
