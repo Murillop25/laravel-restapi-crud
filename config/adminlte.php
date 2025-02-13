@@ -113,8 +113,8 @@ return [
         'enabled' => true,
         'mode' => 'fullscreen',
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
-            'alt' => 'AdminLTE Preloader Image',
+            'path' => 'vendor/adminlte/dist/img/LeitzIconSGD-PL.png',
+            'alt' => 'SGD Preloader Image',
             'effect' => 'animation__shake',
             'width' => 60,
             'height' => 60,
@@ -176,7 +176,7 @@ return [
     'classes_auth_body' => '',
     'classes_auth_footer' => '',
     'classes_auth_icon' => '',
-    'classes_auth_btn' => 'btn-flat btn-primary',
+    'classes_auth_btn' => 'btn-flat btn-success',
 
     /*
     |--------------------------------------------------------------------------
@@ -313,105 +313,72 @@ return [
         // Sidebar items:
         [
             'type' => 'sidebar-menu-search',
-            'text' => 'search',
+            'text' => 'search'
         ],
         [
             'text' => 'blog',
             'url' => 'admin/blog',
             'can' => 'manage-blog',
         ],
+        ['header' => ' - ARCHIVOS'],
         [
             'text' => 'Enviados',
             'url' => 'admin/pages',
-            'icon' => 'far fa-fw fa-file',
+            'icon' => 'fas fa-paper-plane',
             'label' => 4,
             'label_color' => 'success',
         ],
         [
             'text' => 'Recibidos',
             'url' => 'admin/pages',
-            'icon' => 'far fa-fw fa-file',
+            'icon' => 'fas fa-inbox',
             'label' => 4,
             'label_color' => 'primary',
         ],
         [
             'text' => 'Pendientes',
             'url' => 'admin/pages',
-            'icon' => 'far fa-fw fa-file',
+            'icon' => 'fas fa-hourglass-half',
             'label' => 4,
             'label_color' => 'warning',
         ],
         [
-            'text' => ' Lista de Estudiantes',
+            'text' => 'Lista de Estudiantes',
             'url' => 'students/show',
             'icon' => 'fas fa-fw fa-list-ol',
-            'label' => 4,
-            'label_color' => 'success',
         ],
-        ['header' => 'account_settings'],
+        ['header' => ' - MI PERFIL'],
         [
-            'text' => 'profile',
-            'url' => 'admin/settings',
+            'text' => 'Perfil',
+            'url' => 'profile',
             'icon' => 'fas fa-fw fa-user',
         ],
         [
-            'text' => 'change_password',
-            'url' => 'admin/settings',
+            'text' => 'Cambiar Contraseña',
+            'url' => 'password',
             'icon' => 'fas fa-fw fa-lock',
         ],
+    
+        ['header' => ' - REPORTERÍA'],
         [
-            'text' => 'multilevel',
-            'icon' => 'fas fa-fw fa-share',
+            'text' => 'Total Archivos',
+            'url' => '#',
+            'icon' => 'fas fa-fw fa-history',
+            'label' => 92,
             'submenu' => [
                 [
-                    'text' => 'level_one',
+                    'text' => 'Archivos Enviados',
                     'url' => '#',
+                    'label' => 82,
+                    'label_color' => 'primary',
                 ],
                 [
-                    'text' => 'level_one',
+                    'text' => 'Archivos Recibidos',
                     'url' => '#',
-                    'submenu' => [
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                        ],
-                        [
-                            'text' => 'level_two',
-                            'url' => '#',
-                            'submenu' => [
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                                [
-                                    'text' => 'level_three',
-                                    'url' => '#',
-                                ],
-                            ],
-                        ],
-                    ],
-                ],
-                [
-                    'text' => 'level_one',
-                    'url' => '#',
+                    'label' => 10,
+                    'label_color' => 'success',
                 ],
             ],
-        ],
-        ['header' => 'labels'],
-        [
-            'text' => 'important',
-            'icon_color' => 'red',
-            'url' => '#',
-        ],
-        [
-            'text' => 'warning',
-            'icon_color' => 'yellow',
-            'url' => '#',
-        ],
-        [
-            'text' => 'information',
-            'icon_color' => 'cyan',
-            'url' => '#',
         ],
     ],
 
@@ -496,7 +463,7 @@ return [
             ],
         ],
         'Sweetalert2' => [
-            'active' => false,
+            'active' => true,
             'files' => [
                 [
                     'type' => 'js',

@@ -7,28 +7,31 @@ use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class studentController extends Controller
+class StudentController extends Controller
 {
-    // public function index()
-    // {
-    //     $students = Student::all();
-    //     return view('students.show', compact('students'));
-    // }
-    
+    // Muestra todos los estudiantes
     public function showStudent()
     {
         // Obtén todos los estudiantes
         $students = Student::all();
         
+        // Retorna la vista con los estudiantes
         return view('students.showStudent', compact('students'));
     }
 
+    // Muestra el formulario para crear un nuevo estudiante
     public function showCreateForm()
     {
-    // Retorna la vista para crear un nuevo estudiante
-    return view('students.newStudent');
+        // Retorna la vista para crear un nuevo estudiante
+        return view('students.newStudent');
     }
 
+    /**
+     * Almacena un nuevo estudiante en la base de datos.
+     *
+     * @param \Illuminate\Http\Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
     public function store(Request $request)
     {
         // Validar los datos del formulario
@@ -62,42 +65,54 @@ class studentController extends Controller
         // Redirige a la vista de estudiantes con un mensaje de éxito
         return redirect()->route('students.showStudent')->with('success', 'Estudiante creado correctamente.');
     }
+
+    // Muestra un estudiante específico
     public function show($id)
     {
-    $student = Student::find($id);
+        // Buscar el estudiante por ID
+        $student = Student::find($id);
 
-    if (!$student) {
-        return redirect()->route('students.showStudent')->with('error', 'Estudiante no encontrado.');
+        // Si no se encuentra el estudiante, redirige con un mensaje de error
+        if (!$student) {
+            return redirect()->route('students.showStudent')->with('error', 'Estudiante no encontrado.');
+        }
+
+        // Retorna la vista con el estudiante encontrado
+        return view('students.showStudent', compact('student'));
     }
 
-    return view('students.showStudent', compact('student'));
-    }
-
-
+    // Elimina un estudiante de la base de datos
     public function destroy($id)
-{
-    $student = Student::find($id);
+    {
+        // Buscar el estudiante por ID
+        $student = Student::find($id);
 
-    if (!$student) {
-        return redirect()->route('students.showStudent')->with('error', 'Estudiante no encontrado.');
+        // Si no se encuentra el estudiante, redirige con un mensaje de error
+        if (!$student) {
+            return redirect()->route('students.showStudent')->with('error', 'Estudiante no encontrado.');
+        }
+        
+        // Eliminar el estudiante
+        $student->delete();
+
+        // Redirige a la vista de estudiantes con un mensaje de éxito
+        return redirect()->route('students.showStudent')->with('success', 'Estudiante eliminado correctamente.');
     }
-    
-    $student->delete();
 
-    return redirect()->route('students.showStudent')->with('success', 'Estudiante eliminado correctamente.');
-}
-
-
-    // Mostrar el formulario de actualización de estudiante
+    // Muestra el formulario para actualizar un estudiante
     public function showUpdateForm($id)
     {
+        // Buscar el estudiante por ID
         $student = Student::findOrFail($id);
+
+        // Retorna la vista con el formulario de actualización
         return view('students.uptStudent', compact('student'));
     }
 
-    // Actualizar un estudiante
+    // Actualiza un estudiante en la base de datos
     public function update(Request $request, $id)
     {
+        // Validar los datos del formulario
         $request->validate([
             'name' => 'required|string|max:255',
             'email' => 'required|email|max:255|unique:student,email,' . $id,
@@ -105,7 +120,10 @@ class studentController extends Controller
             'language' => 'required|string|max:255',
         ]);
 
+        // Buscar el estudiante por ID
         $student = Student::findOrFail($id);
+
+        // Actualizar los datos del estudiante
         $student->update([
             'name' => $request->name,
             'email' => $request->email,
@@ -113,6 +131,7 @@ class studentController extends Controller
             'language' => $request->language,
         ]);
 
+        // Redirige a la vista de estudiantes con un mensaje de éxito
         return redirect()->route('students.showStudent')->with('success', 'Estudiante actualizado correctamente.');
     }
 
