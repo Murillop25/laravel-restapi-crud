@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\StudentController;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\UserController;
 
 // Ruta principal, muestra la página de inicio
 Route::get('/', [HomeController::class, 'index'])->name('home');
@@ -36,4 +37,9 @@ Route::middleware('auth')->group(function () {
 
     // Ruta para procesar y actualizar un estudiante
     Route::put('/students/{id}', [StudentController::class, 'update'])->name('students.update');
+    
+    // Rutas para la gestión de usuarios
+    Route::get('users', [UserController::class, 'index'])->name('users.index');
+    Route::get('users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
+    Route::put('users/{user}', [UserController::class, 'update'])->name('users.update');
 });

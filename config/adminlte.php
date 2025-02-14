@@ -14,7 +14,7 @@ return [
     |
     */
 
-    'title' => 'AdminLTE 3',
+    'title' => 'Sistema Gestor de Documentos',
     'title_prefix' => '',
     'title_postfix' => '',
 
@@ -63,9 +63,9 @@ return [
     |
     */
 
-    'logo' => '<b>SGD</b>',
-    'logo_img' => 'vendor/adminlte/dist/img/LeitzIconSGD-PL.png',
-    'logo_img_class' => 'brand-image img-circle elevation-3',
+    'logo' => '<b>S.G.D</b>',
+    'logo_img' => 'vendor/adminlte/dist/img/SGD_Icon_p2.png',
+    'logo_img_class' => 'brand-image img-circle elevation-3 logo-custom-size',
     'logo_img_xl' => null,
     'logo_img_xl_class' => 'brand-image-xs',
     'logo_img_alt' => 'Admin Logo',
@@ -86,11 +86,11 @@ return [
     'auth_logo' => [
         'enabled' => false,
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/AdminLTELogo.png',
+            'path' => 'vendor/adminlte/dist/img/SGD_Icon_p2.png',
             'alt' => 'Auth Logo',
-            'class' => '',
-            'width' => 50,
-            'height' => 50,
+            'class' => 'logo-custom-size',
+            'width' => 120, // Ajusta el ancho aquí
+            'height' => 120, // Ajusta la altura aquí
         ],
     ],
 
@@ -113,11 +113,11 @@ return [
         'enabled' => true,
         'mode' => 'fullscreen',
         'img' => [
-            'path' => 'vendor/adminlte/dist/img/LeitzIconSGD-PL.png',
+            'path' => 'vendor/adminlte/dist/img/SGD_Icon_p2.png',
             'alt' => 'SGD Preloader Image',
             'effect' => 'animation__shake',
-            'width' => 60,
-            'height' => 60,
+            'width' => 200,
+            'height' => 200,
         ],
     ],
 
@@ -241,7 +241,7 @@ return [
     'right_sidebar_theme' => 'dark',
     'right_sidebar_slide' => true,
     'right_sidebar_push' => true,
-    'right_sidebar_scrollbar_theme' => 'os-theme-light',
+    'right_sidebar_scrollbar_theme' => 'os-theme-dark',
     'right_sidebar_scrollbar_auto_hide' => 'l',
 
     /*
@@ -346,17 +346,13 @@ return [
             'text' => 'Lista de Estudiantes',
             'url' => 'students/show',
             'icon' => 'fas fa-fw fa-list-ol',
+            'label_color' => 'warning',
         ],
         ['header' => ' - MI PERFIL'],
         [
             'text' => 'Perfil',
-            'url' => 'profile',
+            'url' => 'users',
             'icon' => 'fas fa-fw fa-user',
-        ],
-        [
-            'text' => 'Cambiar Contraseña',
-            'url' => 'password',
-            'icon' => 'fas fa-fw fa-lock',
         ],
     
         ['header' => ' - REPORTERÍA'],
