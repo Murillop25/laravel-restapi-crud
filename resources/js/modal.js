@@ -32,6 +32,6 @@ document.addEventListener('DOMContentLoaded', function () {
             updateForm.setAttribute('action', '/students/' + id);
         });
     } else {
-        console.error('No se encontró el modal de actualización');
+        console.error('No se encontró el modal de actualización de student');
     }
 });

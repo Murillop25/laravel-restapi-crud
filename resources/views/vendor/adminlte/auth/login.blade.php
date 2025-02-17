@@ -92,8 +92,8 @@
 </div>
 @stop
 
-@section('auth_footer')
-    {{-- Password reset link --}}
+{{-- Password reset link --}}
+{{-- @section('auth_footer')
     @if($password_reset_url)
         <p class="my-0">
             <a href="{{ $password_reset_url }}">
@@ -101,16 +101,16 @@
             </a>
         </p>
     @endif
-
-    {{-- Register link --}}
+    
     @if($register_url)
-        <p class="my-0">
-            <a href="{{ $register_url }}">
-                {{ __('adminlte::adminlte.register_a_new_membership') }}
-            </a>
-        </p>
+    <p class="my-0">
+        <a href="{{ $register_url }}">
+            {{ __('adminlte::adminlte.register_a_new_membership') }}
+        </a>
+    </p>
     @endif
-@stop
+@stop --}}
+    {{-- Register link --}}
 
 @section('adminlte_js')
     <script>

@@ -350,7 +350,7 @@ return [
         ],
         ['header' => ' - MI PERFIL'],
         [
-            'text' => 'Perfil',
+            'text' => 'Lista de Usuarios',
             'url' => 'users',
             'icon' => 'fas fa-fw fa-user',
         ],

@@ -1,13 +1,33 @@
-@extends('layouts.app')
 @extends('adminlte::page')
+
 @section('content')
 <div class="container">
     <h1>Users</h1>
     @if (session('success'))
-        <div class="alert alert-success">
+        <div id="success-message" class="alert alert-success alert-dismissible fade show" role="alert">
             {{ session('success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+
+        <script>
+            setTimeout(function () {
+                let alert = document.getElementById('success-message');
+                if (alert) {
+                    alert.style.transition = "opacity 0.5s ease-out";
+                    alert.style.opacity = "0";
+                    setTimeout(() => alert.remove(), 500); // Elimina el mensaje después de desaparecer
+                }
+            }, 3000); // Desvanece el mensaje después de 3 segundos
+        </script>
+    @endif
+
+    @if(session('error'))
+        <div class="alert alert-danger">
+            {{ session('error') }}
         </div>
     @endif
+    
+    <button class="btn btn-primary mb-3" data-bs-toggle="modal" data-bs-target="#createUserModal">Create User</button>
     <table class="table">
         <thead>
             <tr>
@@ -22,7 +42,12 @@
                     <td>{{ $user->name }}</td>
                     <td>{{ $user->email }}</td>
                     <td>
-                        <button class="btn btn-primary" data-toggle="modal" data-target="#editUserModal" data-id="{{ $user->id }}" data-name="{{ $user->name }}" data-email="{{ $user->email }}">Edit</button>
+                        <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#editUserModal" data-id="{{ $user->id }}" data-name="{{ $user->name }}" data-email="{{ $user->email }}">Edit</button>
+                        <form action="{{ route('users.destroy', $user->id) }}" method="POST" style="display:inline-block;">
+                            @csrf
+                            @method('DELETE')
+                            <button type="submit" class="btn btn-danger">Delete</button>
+                        </form>
                     </td>
                 </tr>
             @endforeach
@@ -30,74 +55,10 @@
     </table>
 </div>
 
-<!-- Edit User Modal -->
-<div class="modal fade" id="editUserModal" tabindex="-1" role="dialog" aria-labelledby="editUserModalLabel" aria-hidden="true">
-    <div class="modal-dialog" role="document">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h5 class="modal-title" id="editUserModalLabel">Edit User</h5>
-                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">&times;</span>
-                </button>
-            </div>
-            <div class="modal-body">
-                <form id="editUserForm" method="POST">
-                    @csrf
-                    @method('PUT')
+<!-- Include the modals -->
+@include('users.create')
+@include('users.edit')
 
-                    <div class="form-group">
-                        <label for="edit-name">Name</label>
-                        <input type="text" name="name" id="edit-name" class="form-control @error('name') is-invalid @enderror" required>
-                        @error('name')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-
-                    <div class="form-group">
-                        <label for="edit-email">Email</label>
-                        <input type="email" name="email" id="edit-email" class="form-control @error('email') is-invalid @enderror" required>
-                        @error('email')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-
-                    <div class="form-group">
-                        <label for="edit-password">Password</label>
-                        <input type="password" name="password" id="edit-password" class="form-control @error('password') is-invalid @enderror">
-                        @error('password')
-                            <span class="invalid-feedback" role="alert">
-                                <strong>{{ $message }}</strong>
-                            </span>
-                        @enderror
-                    </div>
-
-                    <div class="form-group">
-                        <label for="edit-password-confirmation">Confirm Password</label>
-                        <input type="password" name="password_confirmation" id="edit-password-confirmation" class="form-control">
-                    </div>
-
-                    <button type="submit" class="btn btn-primary">Update</button>
-                </form>
-            </div>
-        </div>
-    </div>
-</div>
-
-<script>
-    $('#editUserModal').on('show.bs.modal', function (event) {
-        var button = $(event.relatedTarget);
-        var id = button.data('id');
-        var name = button.data('name');
-        var email = button.data('email');
-
-        var modal = $(this);
-        modal.find('.modal-body #edit-name').val(name);
-        modal.find('.modal-body #edit-email').val(email);
-        modal.find('#editUserForm').attr('action', '/users/' + id);
-    });
-</script>
+<!-- Include the script modalUser.js only on this page -->
+@vite('resources/js/modalUser.js')
 @endsection

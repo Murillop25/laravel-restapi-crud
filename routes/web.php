@@ -39,7 +39,5 @@ Route::middleware('auth')->group(function () {
     Route::put('/students/{id}', [StudentController::class, 'update'])->name('students.update');
     
     // Rutas para la gestión de usuarios
-    Route::get('users', [UserController::class, 'index'])->name('users.index');
-    Route::get('users/{user}/edit', [UserController::class, 'edit'])->name('users.edit');
-    Route::put('users/{user}', [UserController::class, 'update'])->name('users.update');
+    Route::resource('users', UserController::class);
 });
