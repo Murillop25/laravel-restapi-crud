@@ -10,13 +10,24 @@
     <div class="container" id="container">
         <!-- Formulario de Registro -->
         <div class="form-container sign-up">
+            @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
             <form id="loginForm" method="POST" action="{{ route('register') }}">
                 @csrf
-                <h1>Crear Cuenta</h1>
-                <span>O usa tu correo electrónico para registrarte</span>
+                <h1>Crear Cuenta</h1>                
                 <input type="text" name="name" placeholder="Nombre" required />
+                <input type="text" name="lastname" placeholder="Apellido" required />
                 <input type="email" name="email" placeholder="Correo Electrónico" required />
+                <input type="date" name="birthdate" placeholder="Fecha de nacimiento" class="form-control" required>
                 <input type="password" name="password" placeholder="Contraseña" required />
+                <input type="password" name="password_confirmation" placeholder="Confirmar Contraseña" required />
                 <button type="submit">Registrarse</button>
             </form>
         </div>
