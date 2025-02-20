@@ -10,7 +10,16 @@
     <div class="container" id="container">
         <!-- Formulario de Registro -->
         <div class="form-container sign-up">
-            <form method="POST" action="{{ route('register') }}">
+            @if ($errors->any())
+                        <div class="alert alert-danger">
+                            <ul>
+                                @foreach ($errors->all() as $error)
+                                    <li>{{ $error }}</li>
+                                @endforeach
+                            </ul>
+                        </div>
+                    @endif
+            <form id="loginForm" method="POST" action="{{ route('register') }}">
                 @csrf
                 <h2>Crear Cuenta</h2>                
                 <input type="text" name="name" placeholder="Nombre" required />
@@ -25,7 +34,7 @@
 
         <!-- Formulario de Inicio de Sesión -->
         <div class="form-container sign-in">
-            <form method="POST" id="loginForm" action="{{ route('login.process') }}">
+            <form method="POST" action="{{ route('login.process') }}">
                 @csrf
                 <h2>Iniciar Sesión</h2>
                 <span>Utiliza tu correo y contraseña</span>
@@ -52,12 +61,6 @@
             </div>
         </div>
     </div>
-    
-    @vite(['resources/js/app.js']) <!-- Carga Vite -->
-    <script>
-        var loginUrl = "{{ route('login.process') }}"; // Definir la URL con Blade
-    </script> 
-    <script src="{{ asset('js/login.js') }}"></script>
-    <script src="{{ asset('js/notyf.js') }}"></script> <!-- Si este archivo no usa Vite, está bien aquí -->
-    
+
+    <script src="{{ asset('js/script2.js') }}"></script>
 @endsection
