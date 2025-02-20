@@ -1,5 +1,5 @@
 document.addEventListener('DOMContentLoaded', function () {
-    console.log('DOM completamente cargado y analizado');
+    // console.log('DOM completamente cargado y analizado');
 
     var updateStudentModal = document.getElementById('updateStudentModal');
     if (updateStudentModal) {
@@ -7,7 +7,7 @@ document.addEventListener('DOMContentLoaded', function () {
         updateStudentModal.addEventListener('show.bs.modal', function (event) {
             var button = event.relatedTarget;
             if (!button) {
-                console.error('No se encontró el botón que activó el modal.');
+                // console.error('No se encontró el botón que activó el modal.');
                 return;
             }
             console.log('Botón que activó el modal:', button);
