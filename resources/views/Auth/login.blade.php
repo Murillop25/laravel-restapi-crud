@@ -21,7 +21,7 @@
                     @endif
             <form id="loginForm" method="POST" action="{{ route('register') }}">
                 @csrf
-                <h1>Crear Cuenta</h1>                
+                <h2>Crear Cuenta</h2>                
                 <input type="text" name="name" placeholder="Nombre" required />
                 <input type="text" name="lastname" placeholder="Apellido" required />
                 <input type="email" name="email" placeholder="Correo Electrónico" required />
@@ -36,7 +36,7 @@
         <div class="form-container sign-in">
             <form method="POST" action="{{ route('login.process') }}">
                 @csrf
-                <h1>Iniciar Sesión</h1>
+                <h2>Iniciar Sesión</h2>
                 <span>Utiliza tu correo y contraseña</span>
                 <input type="email" name="email" placeholder="Correo Electrónico" required />
                 <input type="password" name="password" placeholder="Contraseña" required />
