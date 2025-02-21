@@ -2,52 +2,52 @@
 
 @section('content')
 <div class="container mt-5">
-    <div class="row justify-content-center">
-        <div class="col-md-6">
-            <div class="card">
-                <div class="card-header text-center">Registro</div>
-                <div class="card-body">
-                    @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
-                    <form action="{{ route('register') }}" method="POST">
-                        @csrf
-                        <div class="mb-3">
-                            <label class="form-label">Nombre</label>
-                            <input type="text" name="name" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Apellido</label>
-                            <input type="text" name="lastname" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Correo Electrónico</label>
-                            <input type="email" name="email" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Fecha de Nacimiento</label>
-                            <input type="date" name="birthdate" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Contraseña</label>
-                            <input type="password" name="password" class="form-control" required>
-                        </div>
-                        <div class="mb-3">
-                            <label class="form-label">Confirmar Contraseña</label>
-                            <input type="password" name="password_confirmation" class="form-control" required>
-                        </div>
-                        <button type="submit" class="btn btn-primary w-100">Registrarse</button>
-                    </form>
-                    <p class="mt-3"> <a href="{{ route('login') }}">Regresar al inicio</a></p>
-                </div>
+    <h1>Registro</h1>
+
+    <form action="{{ route('register') }}" method="POST">
+        @csrf
+
+        <div class="form-group mb-3">
+            <label for="name">Nombre</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{ old('name') }}" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="lastname">Apellido</label>
+            <input type="text" class="form-control" id="lastname" name="lastname" value="{{ old('lastname') }}" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="email">Correo Electrónico</label>
+            <input type="email" class="form-control" id="email" name="email" value="{{ old('email') }}" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="birthdate">Fecha de Nacimiento</label>
+            <input type="date" class="form-control" id="birthdate" name="birthdate" value="{{ old('birthdate') }}" required>
+        </div>
+
+        <div class="form-group mb-3">
+            <label for="password">Contraseña</label>
+            <div class="input-group">
+                <input type="password" class="form-control" id="password" name="password" required>
+                <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                    <i class="fas fa-eye"></i>
+                </button>
             </div>
         </div>
-    </div>
+
+        <div class="form-group mb-3">
+            <label for="password_confirmation">Confirmar Contraseña</label>
+            <div class="input-group">
+                <input type="password" class="form-control" id="password_confirmation" name="password_confirmation" required>
+                <button class="btn btn-outline-secondary" type="button" id="togglePasswordConfirmation">
+                    <i class="fas fa-eye"></i>
+                </button>
+            </div>
+        </div>
+
+        <button type="submit" class="btn btn-primary">Registrarse</button>
+    </form>
 </div>
 @endsection
