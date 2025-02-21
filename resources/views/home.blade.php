@@ -1,11 +1,7 @@
 @extends('layouts.app')
 
-@push('styles')
-    <link href="{{ mix('css/home.css') }}" rel="stylesheet">
-@endpush
-
 @section('content')
-<div class="container mt-5">
+<div class="container mt-5 fade-in" id="home-container">
     <div class="text-center">
         <h1>Bienvenido&lpar;a&rpar;</h1>
         <p>¡Estamos felices de tenerte aquí! Disfruta de una imagen inspiradora de la naturaleza.</p>
@@ -16,4 +12,14 @@
         <img src="{{ $imageUrl }}" alt="Paisaje" class="img-fluid rounded">
     </div>
 </div>
+@push('scripts')
+    <script>
+        window.onload = function() {
+            const successMessage = @json(session('success'));
+            const errorMessages = @json($errors->all());
+            showAlerts(successMessage, errorMessages);
+        };
+    </script>
+@endpush   
+@vite(['resources/css/app.css', 'resources/js/app.js'])
 @endsection

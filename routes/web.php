@@ -2,40 +2,41 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\StudentController;
+use App\Http\Controllers\Student\StudentController;
+Use App\Http\Controllers\Auth\LoginController;
+Use App\Http\Controllers\Auth\RegisterController;
+Use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\UserController;
 
-Route::get('/', [HomeController::class, 'index'])->name('home');
+Auth::routes();
 
-// Ruta principal, muestra la página de inicio
-Route::get('/', [HomeController::class, 'index']);
+// Ruta por defecto: Login
+Route::get('/', [LoginController::class, 'showLogin'])->name('login');
+Route::post('/login', [LoginController::class, 'login'])->name('login.process');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
-// Ruta para obtener y mostrar todos los estudiantes
-Route::get('students/show', [StudentController::class, 'showStudent'])->name('students.show');
+// Ruta de registro
+Route::get('/register', [RegisterController::class, 'showRegister'])->name('register');
+Route::post('/register', [RegisterController::class, 'register'])->name('register.process');
 
-// Ruta para eliminar un estudiante de la base de datos
-Route::delete('/students/{id}', [StudentController::class, 'destroy'])->name('students.destroy');
+// Rutas protegidas
+Route::middleware('auth')->group(function () {
+    Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-// Ruta para redirigir a la vista de los estudiantes después de eliminar uno
-Route::get('/students', [StudentController::class, 'showStudent'])->name('students.showStudent');
+    // Rutas para la gestión de estudiantes
+    Route::get('/students/show', [StudentController::class, 'showStudent'])->name('students.show');
+    Route::delete('/students/{id}', [StudentController::class, 'destroy'])->name('students.destroy');
+    Route::get('/students/create', [StudentController::class, 'showCreateForm'])->name('students.create');
+    Route::post('/students', [StudentController::class, 'store'])->name('students.store');
+    Route::get('/students/update/{id}', [StudentController::class, 'showUpdateForm'])->name('students.updateForm');
+    Route::put('/students/{id}', [StudentController::class, 'update'])->name('students.update');
 
-// Ruta para mostrar el formulario de creación de estudiante
-Route::get('/students/create', [StudentController::class, 'showCreateForm'])->name('students.create');
+    // Rutas para la edición de perfil
+    Route::get('/profile', [UserController::class, 'edit'])->name('profile.edit');
+    Route::put('/profile', [UserController::class, 'update'])->name('profile.update');
+    
+    // Rutas para la gestión de usuarios (editar perfil, etc.)
+    // Route::get('users/profile', [UserController::class, 'showProfile'])->name('users.profile');
+    // Route::put('users/{id}', [UserController::class, 'updateProfile'])->name('users.updateProfile');
 
-// Ruta para procesar y crear un nuevo estudiante
-Route::post('/students', [StudentController::class, 'store'])->name('students.store');
-
-// Ruta para mostrar el formulario de actualización de estudiante
-Route::get('/students/update/{id}', [StudentController::class, 'showUpdateForm'])->name('students.updateForm');
-
-// Ruta para procesar y actualizar un estudiante
-Route::put('/students/{id}', [StudentController::class, 'update'])->name('students.update');
-// Route::get('/students/create', [StudentController::class, 'create'])->name('students.create');
-// Route::get('/students', [StudentController::class, 'show']);
-// // Ruta para mostrar todos los estudiantes
-// Route::get('/students/create', [StudentController::class, 'store'])->name('students.newStudent');
-// // Route::get('/students/create', [StudentController::class, 'newStudent'])->name('students.newStudent');
-// Route::post('/students', [StudentController::class, 'store'])->name('students.store');
-// Route::get('/students/update/{id}', [StudentController::class, 'uptStudent'])->name('students.uptStudent');
-// Route::put('/students/{id}', [StudentController::class, 'update'])->name('students.update');
-// // Route::put('/students/{id}', [StudentController::class, 'update'])->name('students.update');
-// Route::delete('/students/destroy/{id}', [StudentController::class, 'destroy'])->name('students.destroy');
+});

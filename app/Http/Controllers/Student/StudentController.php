@@ -1,13 +1,13 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Student;
 
 use App\Http\Controllers\Controller;
 use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class studentController extends Controller
+class StudentController extends Controller
 {
     // public function index()
     // {
@@ -56,45 +56,35 @@ class studentController extends Controller
     
         // Si la creación falla, redirige con un mensaje de error
         if (!$student) {
-            return redirect()->route('students.showStudent')->with('error', 'Error al crear el estudiante.');
+            return redirect()->route('students.show')->with('error', 'Error al crear el estudiante.');
         }
     
         // Redirige a la vista de estudiantes con un mensaje de éxito
-        return redirect()->route('students.showStudent')->with('success', 'Estudiante creado correctamente.');
+        return redirect()->route('students.show')->with('success', 'Estudiante creado correctamente.');
     }
     public function show($id)
+    {
+    $student = Student::find($id);
+
+    if (!$student) {
+        return redirect()->route('students.show')->with('error', 'Estudiante no encontrado.');
+    }
+
+    return view('students.showStudent', compact('student'));
+    }
+
+    public function destroy($id)
     {
         $student = Student::find($id);
 
         if (!$student) {
-            $data = [
-                'message' => 'Estudiante no encontrado',
-                'status' => 404
-            ];
-            return response()->json($data, 404);
+            return redirect()->route('students.show')->with('error', 'Estudiante no encontrado.');
         }
+        
+        $student->delete();
 
-        $data = [
-            'student' => $student,
-            'status' => 200
-        ];
-
-        return response()->json($data, 200);
+        return redirect()->route('students.show')->with('success', 'Estudiante eliminado correctamente.');
     }
-
-    public function destroy($id)
-{
-    $student = Student::find($id);
-
-    if (!$student) {
-        return redirect()->route('students.showStudent')->with('error', 'Estudiante no encontrado.');
-    }
-    
-    $student->delete();
-
-    return redirect()->route('students.showStudent')->with('success', 'Estudiante eliminado correctamente.');
-}
-
 
     // Mostrar el formulario de actualización de estudiante
     public function showUpdateForm($id)
@@ -121,63 +111,62 @@ class studentController extends Controller
             'language' => $request->language,
         ]);
 
-        return redirect()->route('students.show')->with('success', 'Estudiante actualizado exitosamente');
+        return redirect()->route('students.show')->with('success', 'Estudiante actualizado correctamente.');
     }
 
-    public function updatePartial(Request $request, $id)
-    {
-        $student = Student::find($id);
+    // public function updatePartial(Request $request, $id)
+    // {
+    //     $student = Student::find($id);
 
-        if (!$student) {
-            $data = [
-                'message' => 'Estudiante no encontrado',
-                'status' => 404
-            ];
-            return response()->json($data, 404);
-        }
+    //     if (!$student) {
+    //         $data = [
+    //             'message' => 'Estudiante no encontrado',
+    //             'status' => 404
+    //         ];
+    //         return response()->json($data, 404);
+    //     }
 
-        $validator = Validator::make($request->all(), [
-            'name' => 'max:255',
-            'email' => 'email|unique:student',
-            'phone' => 'digits:10',
-            'language' => 'in:English,Spanish,French'
-        ]);
+    //     $validator = Validator::make($request->all(), [
+    //         'name' => 'max:255',
+    //         'email' => 'email|unique:student',
+    //         'phone' => 'digits:10',
+    //         'language' => 'in:English,Spanish,French'
+    //     ]);
 
-        if ($validator->fails()) {
-            $data = [
-                'message' => 'Error en la validación de los datos',
-                'errors' => $validator->errors(),
-                'status' => 400
-            ];
-            return response()->json($data, 400);
-        }
+    //     if ($validator->fails()) {
+    //         $data = [
+    //             'message' => 'Error en la validación de los datos',
+    //             'errors' => $validator->errors(),
+    //             'status' => 400
+    //         ];
+    //         return response()->json($data, 400);
+    //     }
 
-        if ($request->has('name')) {
-            $student->name = $request->name;
-        }
+    //     if ($request->has('name')) {
+    //         $student->name = $request->name;
+    //     }
 
-        if ($request->has('email')) {
-            $student->email = $request->email;
-        }
+    //     if ($request->has('email')) {
+    //         $student->email = $request->email;
+    //     }
 
-        if ($request->has('phone')) {
-            $student->phone = $request->phone;
-        }
+    //     if ($request->has('phone')) {
+    //         $student->phone = $request->phone;
+    //     }
 
-        if ($request->has('language')) {
-            $student->language = $request->language;
-        }
+    //     if ($request->has('language')) {
+    //         $student->language = $request->language;
+    //     }
 
-        $student->save();
+    //     $student->save();
 
-        $data = [
-            'message' => 'Estudiante actualizado',
-            'student' => $student,
-            'status' => 200
-        ];
+    //     $data = [
+    //         'message' => 'Estudiante actualizado',
+    //         'student' => $student,
+    //         'status' => 200
+    //     ];
 
-        return response()->json($data, 200);
-    }
-
+    //     return response()->json($data, 200);
+    // }
 
 }
