@@ -17,6 +17,7 @@
         <div class="form-group">
             <label for="phone">Teléfono:</label>
             <input type="text" class="form-control" id="phone" name="phone" value="{{ $student->phone }}" required>
+            <input type="text" class="form-control" id="phone" name="phone" value="{{ $student->phone }}" required>
         </div>
         <div class="form-group mb-3">
             <label for="language">Idioma</label>
