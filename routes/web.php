@@ -2,22 +2,23 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
-use App\Http\Controllers\Student\studentController;
-use App\Http\Controllers\Auth\AuthController;
-use Illuminate\Support\Facades\Auth;
+use App\Http\Controllers\Student\StudentController;
+Use App\Http\Controllers\Auth\LoginController;
+Use App\Http\Controllers\Auth\RegisterController;
+Use Illuminate\Support\Facades\Auth;
 use App\Http\Controllers\UserController;
 
 Auth::routes();
 
 
 // Ruta por defecto: Login
-Route::get('/', [AuthController::class, 'showLogin'])->name('login');
-Route::post('/login', [AuthController::class, 'login'])->name('login.process');
-Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+Route::get('/', [LoginController::class, 'showLogin'])->name('login');
+Route::post('/login', [LoginController::class, 'login'])->name('login.process');
+Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
 
 // Ruta de registro
-Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
-Route::post('/register', [AuthController::class, 'register'])->name('register.process');
+Route::get('/register', [RegisterController::class, 'showRegister'])->name('register');
+Route::post('/register', [RegisterController::class, 'register'])->name('register.process');
 
 // Rutas protegidas
 Route::middleware('auth')->group(function () {
