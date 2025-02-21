@@ -27,7 +27,7 @@ class RegisterController extends Controller
         'password' => 'required|min:8|confirmed'
     ],[
         'password.required'=> 'La contraseña es obligatoria',
-        'pasaword.min'=> 'La contraseña debe tener al menos 8 caracteres',
+        'password.min'=> 'La contraseña debe tener al menos 8 caracteres',
     ]);
 
     if ($validator->fails()) {
