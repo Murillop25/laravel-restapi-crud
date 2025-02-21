@@ -7,7 +7,7 @@ use App\Models\Student;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Validator;
 
-class studentController extends Controller
+class StudentController extends Controller
 {
     // public function index()
     // {
@@ -56,37 +56,35 @@ class studentController extends Controller
     
         // Si la creación falla, redirige con un mensaje de error
         if (!$student) {
-            return redirect()->route('students.showStudent')->with('error', 'Error al crear el estudiante.');
+            return redirect()->route('students.show')->with('error', 'Error al crear el estudiante.');
         }
     
         // Redirige a la vista de estudiantes con un mensaje de éxito
-        return redirect()->route('students.showStudent')->with('success', 'Estudiante creado correctamente.');
+        return redirect()->route('students.show')->with('success', 'Estudiante creado correctamente.');
     }
     public function show($id)
     {
     $student = Student::find($id);
 
     if (!$student) {
-        return redirect()->route('students.showStudent')->with('error', 'Estudiante no encontrado.');
+        return redirect()->route('students.show')->with('error', 'Estudiante no encontrado.');
     }
 
     return view('students.showStudent', compact('student'));
     }
 
-
     public function destroy($id)
-{
-    $student = Student::find($id);
+    {
+        $student = Student::find($id);
 
-    if (!$student) {
-        return redirect()->route('students.showStudent')->with('error', 'Estudiante no encontrado.');
+        if (!$student) {
+            return redirect()->route('students.show')->with('error', 'Estudiante no encontrado.');
+        }
+        
+        $student->delete();
+
+        return redirect()->route('students.show')->with('success', 'Estudiante eliminado correctamente.');
     }
-    
-    $student->delete();
-
-    return redirect()->route('students.showStudent')->with('success', 'Estudiante eliminado correctamente.');
-}
-
 
     // Mostrar el formulario de actualización de estudiante
     public function showUpdateForm($id)
@@ -113,7 +111,7 @@ class studentController extends Controller
             'language' => $request->language,
         ]);
 
-        return redirect()->route('students.showStudent')->with('success', 'Estudiante actualizado correctamente.');
+        return redirect()->route('students.show')->with('success', 'Estudiante actualizado correctamente.');
     }
 
     // public function updatePartial(Request $request, $id)
@@ -170,6 +168,5 @@ class studentController extends Controller
 
     //     return response()->json($data, 200);
     // }
-
 
 }

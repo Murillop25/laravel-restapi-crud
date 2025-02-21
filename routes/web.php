@@ -10,7 +10,6 @@ use App\Http\Controllers\UserController;
 
 Auth::routes();
 
-
 // Ruta por defecto: Login
 Route::get('/', [LoginController::class, 'showLogin'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.process');

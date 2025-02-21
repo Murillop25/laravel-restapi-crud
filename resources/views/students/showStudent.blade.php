@@ -4,30 +4,6 @@
    <div class="container mt-5">
     <h1>Lista de Estudiantes</h1>
 
-    @if (session('success'))
-    <div id="success-message" class="alert alert-success alert-dismissible fade show" role="alert">
-        {{ session('success') }}
-        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
-    </div>
-
-    <script>
-        setTimeout(function () {
-            let alert = document.getElementById('success-message');
-            if (alert) {
-                alert.style.transition = "opacity 0.5s ease-out";
-                alert.style.opacity = "0";
-                setTimeout(() => alert.remove(), 500); // Elimina el mensaje después de desaparecer
-            }
-        }, 3000); // Desvanece el mensaje después de 3 segundos
-    </script>
-    @endif
-
-    @if(session('error'))
-    <div class="alert alert-danger">
-        {{ session('error') }}
-    </div>
-    @endif
-    
     <button class="btn btn-success mb-3" data-bs-toggle="modal" data-bs-target="#createStudentModal">Crear Estudiante</button>
 
     <table class="table">
@@ -50,7 +26,7 @@
                     <td>
                         <div class="d-flex gap-2">
                             <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateStudentModal" data-id="{{ $student->id }}" data-name="{{ $student->name }}" data-email="{{ $student->email }}" data-phone="{{ $student->phone }}" data-language="{{ $student->language }}">Actualizar</button>
-                            <form action="{{ route('students.destroy', $student->id) }}" method="POST" onsubmit="return confirm('¿Estás seguro de que deseas eliminar este estudiante?');" class="w-100">
+                            <form action="{{ route('students.destroy', $student->id) }}" method="POST" onsubmit="return confirmDelete(event);" class="w-100">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger w-60">Eliminar</button>
@@ -140,5 +116,17 @@
         </div>
     </div>
 </div>
+
+@push('scripts')
+    <script>
+        window.onload = function() {
+            const successMessage = @json(session('success'));
+            const errorMessages = @json($errors->all());
+            const warningMessage = @json(session('warning'));
+            showAlerts(successMessage, errorMessages, warningMessage);
+        };
+    </script>
+@endpush   
+@vite(['resources/css/app.css', 'resources/js/app.js'])
 
 @endsection
