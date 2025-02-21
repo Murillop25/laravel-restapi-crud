@@ -12,4 +12,14 @@
         <img src="{{ $imageUrl }}" alt="Paisaje" class="img-fluid rounded">
     </div>
 </div>
+@push('scripts')
+    <script>
+        window.onload = function() {
+            const successMessage = @json(session('success'));
+            const errorMessages = @json($errors->all());
+            showAlerts(successMessage, errorMessages);
+        };
+    </script>
+@endpush   
+@vite(['resources/css/app.css', 'resources/js/app.js'])
 @endsection

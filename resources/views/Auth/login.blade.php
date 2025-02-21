@@ -10,22 +10,13 @@
     <div class="container" id="container">
         <!-- Formulario de Registro -->
         <div class="form-container sign-up">
-            @if ($errors->any())
-                        <div class="alert alert-danger">
-                            <ul>
-                                @foreach ($errors->all() as $error)
-                                    <li>{{ $error }}</li>
-                                @endforeach
-                            </ul>
-                        </div>
-                    @endif
             <form id="loginForm" method="POST" action="{{ route('register') }}">
                 @csrf
                 <h2>Crear Cuenta</h2>                
-                <input type="text" name="name" placeholder="Nombre" required />
-                <input type="text" name="lastname" placeholder="Apellido" required />
-                <input type="email" name="email" placeholder="Correo Electrónico" required />
-                <input type="date" name="birthdate" placeholder="Fecha de nacimiento" class="form-control" required>
+                <input type="text" name="name" placeholder="Nombre" value="{{ old('name') }}" required />
+                <input type="text" name="lastname" placeholder="Apellido" value="{{ old('lastname') }}" required />
+                <input type="email" name="email" placeholder="Correo Electrónico" value="{{ old('email') }}" required />
+                <input type="date" name="birthdate" placeholder="Fecha de nacimiento" class="form-control" value="{{ old('birthdate') }}" required>
                 <input type="password" name="password" placeholder="Contraseña" required />
                 <input type="password" name="password_confirmation" placeholder="Confirmar Contraseña" required />
                 <button type="submit">Registrarse</button>
@@ -38,7 +29,7 @@
                 @csrf
                 <h2>Iniciar Sesión</h2>
                 <span>Utiliza tu correo y contraseña</span>
-                <input type="email" name="email" placeholder="Correo Electrónico" required />
+                <input type="email" name="email" placeholder="Correo Electrónico" value="{{ old('email') }}" required />
                 <input type="password" name="password" placeholder="Contraseña" required />
                 <button type="submit">Iniciar Sesión</button>
             </form>
@@ -62,5 +53,14 @@
         </div>
     </div>
 
+    @push('scripts')
+    <script>
+        window.onload = function() {
+            const successMessage = @json(session('success'));
+            const errorMessages = @json($errors->all());
+            showAlerts(successMessage, errorMessages);
+        };
+    </script>
+    @endpush
     <script src="{{ asset('js/script2.js') }}"></script>
 @endsection
