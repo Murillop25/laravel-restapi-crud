@@ -52,4 +52,13 @@
         <button type="submit" class="btn btn-primary">Actualizar Perfil</button>
     </form>
 </div>
+@push('scripts')
+<script>
+    window.onload = function() {
+        const successMessage = @json(session('success'));
+        const errorMessages = @json($errors->all());
+        showAlerts(successMessage, errorMessages);
+    };
+</script>
+@endpush
 @endsection

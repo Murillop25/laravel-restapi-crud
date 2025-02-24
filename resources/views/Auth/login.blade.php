@@ -19,13 +19,13 @@
                 <input type="date" name="birthdate" placeholder="Fecha de nacimiento" class="form-control" value="{{ old('birthdate') }}" required>
                 <div class="input-group mb-0">
                     <input type="password" class="form-control" name="password" placeholder="Contraseña" required>
-                    <button class="btn btn-outline-secondary toggle-password" type="button">
+                    <button class="btn toggle-password" type="button">
                         <i class="fas fa-eye"></i>
                     </button>
                 </div>
                 <div class="input-group mb-0">
                     <input type="password" class="form-control" name="password_confirmation" placeholder="Confirmar Contraseña" required>
-                    <button class="btn btn-outline-secondary toggle-password" type="button">
+                    <button class="btn toggle-password" type="button">
                         <i class="fas fa-eye"></i>
                     </button>
                 </div>
@@ -42,7 +42,7 @@
                 <input type="email" name="email" placeholder="Correo Electrónico" value="{{ old('email') }}" required />
                 <div class="input-group mb-3">
                     <input type="password" class="form-control" name="password" placeholder="Contraseña" required>
-                    <button class="btn btn-outline-secondary toggle-password" type="button">
+                    <button class="btn toggle-password" type="button">
                         <i class="fas fa-eye"></i>
                     </button>
                 </div>
@@ -56,13 +56,13 @@
                 <div class="toggle-panel toggle-left">
                     <h1>¡Bienvenido!</h1>
                     <img src="{{ asset ('img/icon_TeleP.png') }}" alt="Telematica" class="img-fluid rounded">
-                    <button class="hidden btn btn-outline-light" id="login">Iniciar Sesión 2</button>
+                    <button class="hidden btn btn-outline-light" id="login">Iniciar Sesión</button>
                 </div>
                 <div class="toggle-panel toggle-right">
                     <h1>¡Bienvenido!</h1>
                     <img src="{{ asset ('img/icon_SGDp.png') }}" alt="Paisaje" class="img-fluid rounded">
                     <p>Regístrate con tus datos personales para usar todas las funciones</p>
-                    <button class="hidden btn btn-outline-light" id="register">Registrarse 2</button>
+                    <button class="hidden btn btn-outline-light" id="register">Registrarse</button>
                 </div>
             </div>
         </div>

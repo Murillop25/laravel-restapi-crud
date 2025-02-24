@@ -23,7 +23,7 @@ body {
     background: none;
     border: none;
     cursor: pointer;
-    padding: 0 10px;
+    padding: 0 8px;
 }
 
 .toggle-password i {
@@ -36,9 +36,10 @@ body {
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.35);
     position: relative;
     overflow: hidden;
-    width: 768px;
+    width: 54vw;
+    height: 60vh;
     max-width: 100%;
-    min-height: 480px;
+    min-height: 52vh;
 }
 
 .container p {
@@ -57,20 +58,6 @@ body {
     font-size: 13px;
     text-decoration: none;
     margin: 15px 0 10px;
-}
-
-.container .form-button {
-    background-color: #2da0a8;
-    color: #fff;
-    font-size: 12px;
-    padding: 10px 45px;
-    border: 1px solid transparent;
-    border-radius: 8px;
-    font-weight: 600;
-    letter-spacing: 0.5px;
-    text-transform: uppercase;
-    margin-top: 10px;
-    cursor: pointer;
 }
 
 .container .form-button {
