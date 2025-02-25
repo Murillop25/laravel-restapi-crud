@@ -14,7 +14,7 @@
                 @csrf
                 <h2>Crear Cuenta</h2>                
                 <input type="text" name="name" placeholder="Nombre" value="{{ old('name') }}" required />
-                <input type="text" name="name" placeholder="Nombre de usuario" value="{{ old('username') }}" required />
+                <input type="text" name="username" placeholder="Nombre de usuario" value="{{ old('username') }}" required />
                 <input type="text" name="lastname" placeholder="Apellido" value="{{ old('lastname') }}" required />
                 <input type="email" name="email" placeholder="Correo Electrónico" value="{{ old('email') }}" required />
                 <input type="date" name="birthdate" placeholder="Fecha de nacimiento" class="form-control" value="{{ old('birthdate') }}" required>
@@ -39,17 +39,21 @@
             <form method="POST" action="{{ route('login.process') }}">
                 @csrf
                 <h2>Iniciar Sesión</h2>
-                <span>Utiliza tu correo y contraseña</span>
-                <input type="email" name="email" placeholder="Correo Electrónico" value="{{ old('email') }}" required />
+                <span>Utiliza tu correo o usuario y contraseña</span>
+                <!-- Campo de texto para correo o nombre de usuario -->
+                <input type="text" name="login" placeholder="Correo o Usuario" value="{{ old('login') }}" required />
+        
                 <div class="input-group mb-3">
                     <input type="password" class="form-control" name="password" placeholder="Contraseña" required>
                     <button class="btn toggle-password" type="button">
                         <i class="fas fa-eye"></i>
                     </button>
                 </div>
+                
                 <button type="submit" class="form-button">Iniciar Sesión</button>
             </form>
         </div>
+        
 
         <!-- Panel de Alternancia -->
         <div class="toggle-container">

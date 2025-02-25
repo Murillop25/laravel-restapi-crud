@@ -23,35 +23,45 @@ class LoginController extends Controller
 
     // Procesar login
     public function login(Request $request)
-    {
-        $validator = Validator::make($request->all(), [
-            'email' => 'required|email',
-            'password' => 'required'
-        ]);
-    
-        if ($validator->fails()) {
-            return back()->withErrors($validator)->withInput();
-        }
-    
-        $credentials = $request->only('email', 'password');
-    
-        // Verificar si el correo existe en la base de datos
-        $user = User::where('email', $credentials['email'])->first();
-        if (!$user) {
-            return back()->withErrors(['email' => 'Correo no registrado'])->withInput();
-        }
-    
-        // Intentar autenticar al usuario
-        if (!Auth::attempt($credentials)) {
-            return back()->withErrors(['password' => 'Contraseña errónea'])->withInput();
-        }
-    
-        // Agregar registro de log
-        Log::info('Inicio de sesión exitoso para el usuario: ' . $user->email);
-        // Mostrar alerta antes de redirigir
-        $request->session()->regenerate();
-        return redirect()->route('home')->with('success', 'Inicio de sesión exitoso.');
+{
+    $validator = Validator::make($request->all(), [
+        'login' => 'required|string', // Puede ser email o username
+        'password' => 'required|string'
+    ]);
+
+    if ($validator->fails()) {
+        return back()->withErrors($validator)->withInput();
     }
+
+    // Determinar si el usuario ingresó un email o un username
+    $fieldType = filter_var($request->login, FILTER_VALIDATE_EMAIL) ? 'email' : 'username';
+
+    // Construir credenciales con email o username
+    $credentials = [
+        $fieldType => $request->login,
+        'password' => $request->password
+    ];
+
+    // Verificar si el usuario existe en la base de datos
+    $user = User::where($fieldType, $request->login)->first();
+    if (!$user) {
+        return back()->withErrors(['login' => 'Usuario no registrado'])->withInput();
+    }
+
+    // Intentar autenticar al usuario
+    if (!Auth::attempt($credentials)) {
+        return back()->withErrors(['password' => 'Contraseña errónea'])->withInput();
+    }
+
+    // Agregar registro de log
+    Log::info('Inicio de sesión exitoso para el usuario: ' . $user->email);
+
+    // Regenerar la sesión
+    $request->session()->regenerate();
+
+    return redirect()->route('home')->with('success', 'Inicio de sesión exitoso.');
+}
+
 
     // Cerrar sesión
     public function logout(Request $request)
