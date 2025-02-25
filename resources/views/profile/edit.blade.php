@@ -1,43 +1,69 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
-    <h2>Editar Perfil</h2>
-    <form action="{{ route('user.update') }}" method="POST">
+<div class="container mt-5">
+    <h1>Editar Perfil</h1>
+
+    <form action="{{ route('profile.update') }}" method="POST">
         @csrf
         @method('PUT')
 
-        <div class="mb-3">
-            <label for="name" class="form-label">Nombre</label>
-            <input type="text" class="form-control" id="name" name="name" value="{{ old('name', $user->name) }}">
+        <div class="form-group mb-3">
+            <label for="name">Nombre</label>
+            <input type="text" class="form-control" id="name" name="name" value="{{ auth()->user()->name }}" required>
         </div>
 
         <div class="mb-3">
-            <label for="lastname" class="form-label">Apellido</label>
-            <input type="text" class="form-control" id="lastname" name="lastname" value="{{ old('lastname', $user->lastname) }}">
+            <label for="username" class="form-label">Nombre de usuario</label>
+            <input type="text" class="form-control" id="username" name="username" value="{{ old('username', $user->username) }}" required>
+        </div>
+        
+        <div class="form-group mb-3">
+            <label for="lastname">Apellido</label>
+            <input type="text" class="form-control" id="lastname" name="lastname" value="{{ auth()->user()->lastname }}" required>
         </div>
 
-        <div class="mb-3">
-            <label for="email" class="form-label">Correo Electrónico</label>
-            <input type="email" class="form-control" id="email" name="email" value="{{ old('email', $user->email) }}">
+        <div class="form-group mb-3">
+            <label for="email">Correo Electrónico</label>
+            <input type="email" class="form-control" id="email" name="email" value="{{ auth()->user()->email }}" required>
         </div>
 
-        <div class="mb-3">
-            <label for="birthdate" class="form-label">Fecha de Nacimiento</label>
-            <input type="date" class="form-control" id="birthdate" name="birthdate" value="{{ old('birthdate', $user->birthdate) }}">
+        <div class="form-group mb-3">
+            <label for="birthdate">Fecha de Nacimiento</label>
+            <input type="date" class="form-control" id="birthdate" name="birthdate" value="{{ auth()->user()->birthdate }}" required>
         </div>
 
-        <div class="mb-3">
-            <label for="password" class="form-label">Nueva Contraseña</label>
-            <input type="password" class="form-control" id="password" name="password">
+        <div class="form-group mb-3">
+            <label for="password">Contraseña</label>
+            <div class="input-group">
+                <input type="password" class="form-control" id="password" name="password">
+                <button class="btn btn-outline-secondary" type="button" id="togglePassword">
+                    <i class="fas fa-eye"></i>
+                </button>
+            </div>
+            <small class="form-text text-muted">Deja este campo vacío si no deseas cambiar la contraseña.</small>
         </div>
 
-        <div class="mb-3">
-            <label for="password_confirmation" class="form-label">Confirmar Nueva Contraseña</label>
-            <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
+        <div class="form-group mb-3">
+            <label for="password_confirmation">Confirmar Contraseña</label>
+            <div class="input-group">
+                <input type="password" class="form-control" id="password_confirmation" name="password_confirmation">
+                <button class="btn btn-outline-secondary" type="button" id="togglePasswordConfirmation">
+                    <i class="fas fa-eye"></i>
+                </button>
+            </div>
         </div>
 
         <button type="submit" class="btn btn-primary">Actualizar Perfil</button>
     </form>
 </div>
+@push('scripts')
+<script>
+    window.onload = function() {
+        const successMessage = @json(session('success'));
+        const errorMessages = @json($errors->all());
+        showAlerts(successMessage, errorMessages);
+    };
+</script>
+@endpush
 @endsection

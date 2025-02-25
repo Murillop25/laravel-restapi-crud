@@ -14,12 +14,23 @@
                 @csrf
                 <h2>Crear Cuenta</h2>                
                 <input type="text" name="name" placeholder="Nombre" value="{{ old('name') }}" required />
+                <input type="text" name="name" placeholder="Nombre de usuario" value="{{ old('username') }}" required />
                 <input type="text" name="lastname" placeholder="Apellido" value="{{ old('lastname') }}" required />
                 <input type="email" name="email" placeholder="Correo Electrónico" value="{{ old('email') }}" required />
                 <input type="date" name="birthdate" placeholder="Fecha de nacimiento" class="form-control" value="{{ old('birthdate') }}" required>
-                <input type="password" name="password" placeholder="Contraseña" required />
-                <input type="password" name="password_confirmation" placeholder="Confirmar Contraseña" required />
-                <button type="submit">Registrarse</button>
+                <div class="input-group mb-0">
+                    <input type="password" class="form-control" name="password" placeholder="Contraseña" required>
+                    <button class="btn toggle-password" type="button">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+                <div class="input-group mb-0">
+                    <input type="password" class="form-control" name="password_confirmation" placeholder="Confirmar Contraseña" required>
+                    <button class="btn toggle-password" type="button">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+                <button type="submit" class="form-button">Registrarse</button>
             </form>
         </div>
 
@@ -30,8 +41,13 @@
                 <h2>Iniciar Sesión</h2>
                 <span>Utiliza tu correo y contraseña</span>
                 <input type="email" name="email" placeholder="Correo Electrónico" value="{{ old('email') }}" required />
-                <input type="password" name="password" placeholder="Contraseña" required />
-                <button type="submit">Iniciar Sesión</button>
+                <div class="input-group mb-3">
+                    <input type="password" class="form-control" name="password" placeholder="Contraseña" required>
+                    <button class="btn toggle-password" type="button">
+                        <i class="fas fa-eye"></i>
+                    </button>
+                </div>
+                <button type="submit" class="form-button">Iniciar Sesión</button>
             </form>
         </div>
 
@@ -41,13 +57,13 @@
                 <div class="toggle-panel toggle-left">
                     <h1>¡Bienvenido!</h1>
                     <img src="{{ asset ('img/icon_TeleP.png') }}" alt="Telematica" class="img-fluid rounded">
-                    <button class="hidden" id="login">Iniciar Sesión</button>
+                    <button class="hidden btn btn-outline-light" id="login">Iniciar Sesión</button>
                 </div>
                 <div class="toggle-panel toggle-right">
                     <h1>¡Bienvenido!</h1>
                     <img src="{{ asset ('img/icon_SGDp.png') }}" alt="Paisaje" class="img-fluid rounded">
                     <p>Regístrate con tus datos personales para usar todas las funciones</p>
-                    <button class="hidden" id="register">Registrarse</button>
+                    <button class="hidden btn btn-outline-light" id="register">Registrarse</button>
                 </div>
             </div>
         </div>

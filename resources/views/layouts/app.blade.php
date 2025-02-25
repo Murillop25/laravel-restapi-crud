@@ -5,6 +5,7 @@
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <title>SGD</title>
         <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
         <meta name="csrf-token" content="{{ csrf_token() }}">
     </head>
 <body>
@@ -37,11 +38,11 @@
                         <!-- Dropdown para "Mi perfil" y cerrar sesión -->
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Mi perfil
+                                {{ Auth::user()->name }}
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
-                                <!-- Enlace para editar el perfil (esto se agregará más adelante) -->
-                                <li><a class="dropdown-item" href="#">Editar perfil</a></li>
+                                <!-- Enlace para editar el perfil -->
+                                <li><a class="dropdown-item" href="{{ route('profile.edit') }}">Editar perfil</a></li>
         
                                 <!-- Formulario para cerrar sesión -->
                                 <li>
