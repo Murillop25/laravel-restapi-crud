@@ -14,6 +14,7 @@
                 @csrf
                 <h2>Crear Cuenta</h2>                
                 <input type="text" name="name" placeholder="Nombre" value="{{ old('name') }}" required />
+                <input type="text" name="name" placeholder="Nombre de usuario" value="{{ old('username') }}" required />
                 <input type="text" name="lastname" placeholder="Apellido" value="{{ old('lastname') }}" required />
                 <input type="email" name="email" placeholder="Correo Electrónico" value="{{ old('email') }}" required />
                 <input type="date" name="birthdate" placeholder="Fecha de nacimiento" class="form-control" value="{{ old('birthdate') }}" required>
