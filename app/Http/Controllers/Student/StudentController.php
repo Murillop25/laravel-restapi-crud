@@ -15,6 +15,14 @@ class StudentController extends Controller
     //     return view('students.show', compact('students'));
     // }
 
+    public function ListStudent()
+    {
+        // Obtén los estudiantes asociados al usuario autenticado
+        $students = Student::all();
+
+        return view('students.listStudent', compact('students'));
+    }
+
     public function showStudent()
     {
         // Obtén los estudiantes asociados al usuario autenticado

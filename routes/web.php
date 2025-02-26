@@ -24,6 +24,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
     // Rutas para la gestión de estudiantes
+    Route::get('/students/list', [StudentController::class, 'listStudent'])->name('students.list');
     Route::get('/students/show', [StudentController::class, 'showStudent'])->name('students.show');
     Route::delete('/students/{id}', [StudentController::class, 'destroy'])->name('students.destroy');
     Route::get('/students/create', [StudentController::class, 'showCreateForm'])->name('students.create');

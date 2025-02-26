@@ -29,8 +29,13 @@
                         <li class="nav-item">
                             <a class="nav-link {{ Route::currentRouteName() == 'home' ? 'active' : '' }}" aria-current="page" href="{{ url('/') }}">Inicio</a>
                         </li>
+
+                         <!-- Enlace para ver unicamente todos los estudiantes -->
+                         <li class="nav-item">
+                            <a class="nav-link {{ Route::currentRouteName() == 'students.list' ? 'active' : '' }}" href="{{ route('students.list') }}">Lista de Estudiantes</a>
+                        </li>
                         
-                        <!-- Enlace para ver estudiantes -->
+                        <!-- Enlace para ver estudiantes creados en base al id-->
                         <li class="nav-item">
                             <a class="nav-link {{ Route::currentRouteName() == 'students.show' ? 'active' : '' }}" href="{{ route('students.show') }}">Ver Estudiantes</a>
                         </li>
