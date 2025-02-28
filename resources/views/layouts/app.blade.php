@@ -25,6 +25,10 @@
                 <!-- Enlaces -->
                 <div class="collapse navbar-collapse" id="navbarNav">
                     <ul class="navbar-nav ms-auto">
+                        <!-- Enlace a la página de roles -->
+                        <li class="nav-item">
+                                <a class="nav-link {{ Route::currentRouteName() == 'assign.role' ? 'active' : '' }}" aria-current="page" href="{{ route('assign.role') }}">Asignar Roles</a>
+                        </li>
                         <!-- Enlace a la página de inicio -->
                         <li class="nav-item">
                             <a class="nav-link {{ Route::currentRouteName() == 'home' ? 'active' : '' }}" aria-current="page" href="{{ url('/') }}">Inicio</a>

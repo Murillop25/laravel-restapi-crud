@@ -18,7 +18,7 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name', 'lastname', 'email', 'password', 'birthdate', 'username', 'is_active',
+        'name', 'lastname', 'email', 'password', 'birthdate', 'username', 'is_active', 'role',
     ];
 
     // Relación muchos a muchos con roles

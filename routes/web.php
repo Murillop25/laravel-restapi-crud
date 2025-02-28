@@ -1,14 +1,24 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+//home
 use App\Http\Controllers\HomeController;
+use App\Http\Controllers\RoleController;
+//students
 use App\Http\Controllers\Student\StudentController;
-Use App\Http\Controllers\Auth\LoginController;
-Use App\Http\Controllers\Auth\RegisterController;
-Use Illuminate\Support\Facades\Auth;
+//auth
+use App\Http\Controllers\Auth\LoginController;
+use App\Http\Controllers\Auth\RegisterController;
+use Illuminate\Support\Facades\Auth;
+//user
 use App\Http\Controllers\UserController;
 
 Auth::routes();
+
+// Ruta para mostrar el formulario de asignación de roles
+Route::get('/assign-role', [RoleController::class, 'showAssignRoleForm'])->name('assign.role.form');
+// Ruta para manejar la asignación de roles
+Route::post('/assign-role', [RoleController::class, 'assignRole'])->name('assign.role');
 
 // Ruta por defecto: Login
 Route::get('/', [LoginController::class, 'showLogin'])->name('login');
@@ -20,24 +30,29 @@ Route::get('/register', [RegisterController::class, 'showRegister'])->name('regi
 Route::post('/register', [RegisterController::class, 'register'])->name('register.process');
 
 // Rutas protegidas
-Route::middleware('auth')->group(function () {
+Route::middleware(['auth'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
-    // Rutas para la gestión de estudiantes
-    Route::get('/students/list', [StudentController::class, 'listStudent'])->name('students.list');
-    Route::get('/students/show', [StudentController::class, 'showStudent'])->name('students.show');
-    Route::delete('/students/{id}', [StudentController::class, 'destroy'])->name('students.destroy');
-    Route::get('/students/create', [StudentController::class, 'showCreateForm'])->name('students.create');
-    Route::post('/students', [StudentController::class, 'store'])->name('students.store');
-    Route::get('/students/update/{id}', [StudentController::class, 'showUpdateForm'])->name('students.updateForm');
-    Route::put('/students/{id}', [StudentController::class, 'update'])->name('students.update');
+    // Rutas para la gestión de estudiantes (solo para maestros y directores)
+    Route::middleware('role:maestro,director')->group(function () {
+        Route::get('/students/show', [StudentController::class, 'showStudent'])->name('students.show');
+        Route::get('/students/create', [StudentController::class, 'showCreateForm'])->name('students.create');
+        Route::post('/students', [StudentController::class, 'store'])->name('students.store');
+        Route::get('/students/update/{id}', [StudentController::class, 'showUpdateForm'])->name('students.updateForm');
+        Route::put('/students/{id}', [StudentController::class, 'update'])->name('students.update');
+    });
 
-    // Rutas para la edición de perfil
+    // Rutas de eliminación solo para directores
+    Route::middleware('role:director')->group(function () {
+        Route::delete('/students/{id}', [StudentController::class, 'destroy'])->name('students.destroy');
+    });
+
+    // Rutas para supervisores (solo pueden ver la lista de estudiantes)
+    Route::middleware('role:supervisor,maestro,director')->group(function () {
+        Route::get('/students/list', [StudentController::class, 'listStudent'])->name('students.list');
+    });
+
+    // Edición de perfil (cualquier usuario autenticado)
     Route::get('/profile', [UserController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [UserController::class, 'update'])->name('profile.update');
-    
-    // Rutas para la gestión de usuarios (editar perfil, etc.)
-    // Route::get('users/profile', [UserController::class, 'showProfile'])->name('users.profile');
-    // Route::put('users/{id}', [UserController::class, 'updateProfile'])->name('users.updateProfile');
-
 });
