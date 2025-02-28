@@ -41,8 +41,9 @@ class StudentController extends Controller
     {
         // Validar los datos del formulario
         $validator = Validator::make($request->all(), [
-            'name' => 'required|max:255',
-            'email' => 'required|email|unique:student,email', // Aquí debe ser 'students' si el nombre de la tabla es 'students'
+            'name' => 'required|string|max:255',
+            'lastName' => 'required|string|max:255',
+            'email' => 'required|string|email|max:255|unique:students', 
             'phone' => 'required|digits:8',
             'language' => 'required|in:English,Spanish,French',
         ]);
@@ -57,6 +58,7 @@ class StudentController extends Controller
         // Crear el estudiante en la base de datos
         $student = Student::create([
             'name' => $request->name,
+            'lastName' => $request->lastName,
             'email' => $request->email,
             'phone' => $request->phone,
             'language' => $request->language,
@@ -92,7 +94,9 @@ class StudentController extends Controller
     // Eliminar un estudiante
     public function destroy($id)
     {
-        $student = Student::find($id);
+        $student = Student::where('id', $id)
+        ->where('user_id', auth()->id())
+        ->first();
 
         if (!$student) {
             return redirect()->route('students.show')->with('error', 'Estudiante no encontrado.');
@@ -122,7 +126,8 @@ class StudentController extends Controller
         // Validar los datos del formulario
         $request->validate([
             'name' => 'required|string|max:255',
-            'email' => 'required|email|max:255|unique:student,email,' . $id,
+            'lastName' => 'required|string|max:255',
+            'email' => 'required|email|max:255|unique:students,email,' . $id,
             'phone' => 'required|digits:8',
             'language' => 'required|string|max:255',
         ]);
@@ -135,6 +140,7 @@ class StudentController extends Controller
         // Actualizar los datos del estudiante
         $student->update([
             'name' => $request->name,
+            'lastName' => $request->lastName,
             'email' => $request->email,
             'phone' => $request->phone,
             'language' => $request->language,
@@ -143,61 +149,5 @@ class StudentController extends Controller
         // Redirigir con mensaje de éxito
         return redirect()->route('students.show')->with('success', 'Estudiante actualizado correctamente.');
     }
-
-
-    // public function updatePartial(Request $request, $id)
-    // {
-    //     $student = Student::find($id);
-
-    //     if (!$student) {
-    //         $data = [
-    //             'message' => 'Estudiante no encontrado',
-    //             'status' => 404
-    //         ];
-    //         return response()->json($data, 404);
-    //     }
-
-    //     $validator = Validator::make($request->all(), [
-    //         'name' => 'max:255',
-    //         'email' => 'email|unique:student',
-    //         'phone' => 'digits:10',
-    //         'language' => 'in:English,Spanish,French'
-    //     ]);
-
-    //     if ($validator->fails()) {
-    //         $data = [
-    //             'message' => 'Error en la validación de los datos',
-    //             'errors' => $validator->errors(),
-    //             'status' => 400
-    //         ];
-    //         return response()->json($data, 400);
-    //     }
-
-    //     if ($request->has('name')) {
-    //         $student->name = $request->name;
-    //     }
-
-    //     if ($request->has('email')) {
-    //         $student->email = $request->email;
-    //     }
-
-    //     if ($request->has('phone')) {
-    //         $student->phone = $request->phone;
-    //     }
-
-    //     if ($request->has('language')) {
-    //         $student->language = $request->language;
-    //     }
-
-    //     $student->save();
-
-    //     $data = [
-    //         'message' => 'Estudiante actualizado',
-    //         'student' => $student,
-    //         'status' => 200
-    //     ];
-
-    //     return response()->json($data, 200);
-    // }
 
 }

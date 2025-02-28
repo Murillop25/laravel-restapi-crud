@@ -9,7 +9,8 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Nombre</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
                 <th>Email</th>
                 <th>Teléfono</th>
                 <th>Idioma</th>
@@ -19,13 +20,14 @@
         <tbody>
             @foreach ($students as $student)
                 <tr>
-                    <td>{{ $student->name }}</td>
-                    <td>{{ $student->email }}</td>
-                    <td>{{ $student->phone }}</td>
-                    <td>{{ $student->language }}</td>
+                    <td>{{ $student->name}}</td>
+                    <td>{{ $student->lastName}}</td>
+                    <td>{{ $student->email}}</td>
+                    <td>{{ $student->phone}}</td>
+                    <td>{{ $student->language}}</td>
                     <td>
                         <div class="d-flex gap-2">
-                            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateStudentModal" data-id="{{ $student->id }}" data-name="{{ $student->name }}" data-email="{{ $student->email }}" data-phone="{{ $student->phone }}" data-language="{{ $student->language }}">Actualizar</button>
+                            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#updateStudentModal" data-id="{{ $student->id }}" data-name="{{ $student->name }}" data-name="{{ $student->lastName}}" data-email="{{ $student->email }}" data-phone="{{ $student->phone }}" data-language="{{ $student->language }}">Actualizar</button>
                             <form action="{{ route('students.destroy', $student->id) }}" method="POST" onsubmit="return confirmDelete(event);" class="w-100">
                                 @csrf
                                 @method('DELETE')
@@ -51,9 +53,13 @@
                    <form id="createStudentForm" action="{{ route('students.store') }}" method="POST">
                        @csrf
                        <div class="form-group">
-                           <label for="name">Nombre</label>
+                           <label for="name">Nombres</label>
                            <input type="text" class="form-control" id="name" name="name" required>
                        </div>
+                       <div class="form-group">
+                        <label for="name">Apellidos</label>
+                        <input type="text" class="form-control" id="lastName" name="lastName" required>
+                    </div>
                        <div class="form-group">
                            <label for="email">Correo Electrónico</label>
                            <input type="email" class="form-control" id="email" name="email" required>
@@ -93,6 +99,10 @@
                     <div class="form-group">
                         <label for="update-name">Nombre</label>
                         <input type="text" class="form-control" id="update-name" name="name" required>
+                    </div>
+                    <div class="form-group">
+                        <label for="update-name">Apellidos</label>
+                        <input type="text" class="form-control" id="update-lastName" name="lastName" required>
                     </div>
                     <div class="form-group">
                         <label for="update-email">Correo Electrónico</label>

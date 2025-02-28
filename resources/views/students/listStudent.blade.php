@@ -7,7 +7,8 @@
     <table class="table">
         <thead>
             <tr>
-                <th>Nombre</th>
+                <th>Nombres</th>
+                <th>Apellidos</th>
                 <th>Email</th>
                 <th>Teléfono</th>
                 <th>Idioma</th>
@@ -16,10 +17,11 @@
         <tbody>
             @foreach ($students as $student)
                 <tr>
-                    <td>{{ $student->name }}</td>
-                    <td>{{ $student->email }}</td>
-                    <td>{{ $student->phone }}</td>
-                    <td>{{ $student->language }}</td>                   
+                    <td>{{ $student->name}}</td>
+                    <td>{{ $student->lastName}}</td>
+                    <td>{{ $student->email}}</td>
+                    <td>{{ $student->phone}}</td>
+                    <td>{{ $student->language}}</td>                   
                 </tr>
             @endforeach
         </tbody>

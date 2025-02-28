@@ -16,12 +16,15 @@
     </div>
     @endif
 
-
     <form action="{{ route('students.store') }}" method="POST">
         @csrf
         <div class="form-group">
-            <label for="name">Nombre</label>
+            <label for="name">Nombres</label>
             <input type="text" class="form-control" id="name" name="name" required>
+        </div>
+        <div class="form-group">
+            <label for="name">Apellidos</label>
+            <input type="text" class="form-control" id="lastName" name="lastName" required>
         </div>
         <div class="form-group">
             <label for="email">Email</label>
