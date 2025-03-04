@@ -15,11 +15,6 @@ use App\Http\Controllers\UserController;
 
 Auth::routes();
 
-// Ruta para mostrar el formulario de asignación de roles
-Route::get('/assign-role', [RoleController::class, 'showAssignRoleForm'])->name('assign.role.form');
-// Ruta para manejar la asignación de roles
-Route::post('/assign-role', [RoleController::class, 'assignRole'])->name('assign.role');
-
 // Ruta por defecto: Login
 Route::get('/', [LoginController::class, 'showLogin'])->name('login');
 Route::post('/login', [LoginController::class, 'login'])->name('login.process');
@@ -34,7 +29,7 @@ Route::middleware(['auth'])->group(function () {
     Route::get('/home', [HomeController::class, 'index'])->name('home');
 
     // Rutas para la gestión de estudiantes (solo para maestros y directores)
-    Route::middleware('role:maestro,director')->group(function () {
+    Route::middleware('role:maestro,director,admin')->group(function () {
         Route::get('/students/show', [StudentController::class, 'showStudent'])->name('students.show');
         Route::get('/students/create', [StudentController::class, 'showCreateForm'])->name('students.create');
         Route::post('/students', [StudentController::class, 'store'])->name('students.store');
@@ -43,16 +38,24 @@ Route::middleware(['auth'])->group(function () {
     });
 
     // Rutas de eliminación solo para directores
-    Route::middleware('role:director')->group(function () {
+    Route::middleware('role:director,admin')->group(function () {
         Route::delete('/students/{id}', [StudentController::class, 'destroy'])->name('students.destroy');
     });
 
-    // Rutas para supervisores (solo pueden ver la lista de estudiantes)
-    Route::middleware('role:supervisor,maestro,director')->group(function () {
+    // Rutas para admin, supervisores, maestros y directores (pueden ver la lista de estudiantes)
+    Route::middleware('role:supervisor,maestro,director,admin')->group(function () {
         Route::get('/students/list', [StudentController::class, 'listStudent'])->name('students.list');
     });
 
-    // Edición de perfil (cualquier usuario autenticado)
-    Route::get('/profile', [UserController::class, 'edit'])->name('profile.edit');
-    Route::put('/profile', [UserController::class, 'update'])->name('profile.update');
+    // Rutas para admin, supervisores, maestros y directores (pueden ver el editar perfil)
+    Route::middleware('role:supervisor,maestro,director,admin')->group(function () {
+        Route::get('/profile', [UserController::class, 'edit'])->name('profile.edit');
+        Route::put('/profile', [UserController::class, 'update'])->name('profile.update');
+    });
+
+    // Rutas de asignación de roles (Solo Admin)
+    Route::middleware('role:admin')->group(function () {
+        Route::get('/assign-role', [RoleController::class, 'showAssignRoleForm'])->name('assign.role');
+        Route::post('/assign-role', [RoleController::class, 'assignRole'])->name('assign.role.process');
+    });
 });

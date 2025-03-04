@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container">
+<div class="container mt-5">
     <h2>Asignar Roles a Usuarios</h2>
     
     <form action="{{ route('assign.role') }}" method="POST">
