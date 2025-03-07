@@ -23,7 +23,7 @@ class LoginController extends Controller
 
     // Procesar login
     public function login(Request $request)
-{
+    {
     $validator = Validator::make($request->all(), [
         'login' => 'required|string', // Puede ser email o username
         'password' => 'required|string'

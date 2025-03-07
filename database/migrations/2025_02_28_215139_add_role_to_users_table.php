@@ -12,7 +12,7 @@ return new class extends Migration
     public function up(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->string('username')->unique()->after('lastname');// Agregar campo único después de 'lastname'
+            $table->string('role')->default('estudiante')->after('username');
         });
     }
 
@@ -22,7 +22,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::table('users', function (Blueprint $table) {
-            $table->dropColumn('username'); // Revertir los cambios en caso de hacer rollback
+            $table->dropColumn('role');
         });
     }
 };
