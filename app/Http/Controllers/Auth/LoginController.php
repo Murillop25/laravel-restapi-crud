@@ -23,7 +23,7 @@ class LoginController extends Controller
 
     // Procesar login
     public function login(Request $request)
-    {
+{
     $validator = Validator::make($request->all(), [
         'login' => 'required|string', // Puede ser email o username
         'password' => 'required|string'
@@ -48,7 +48,16 @@ class LoginController extends Controller
         return back()->withErrors(['login' => 'Usuario no registrado'])->withInput();
     }
 
-    // Intentar autenticar al usuario
+    // Agregar log para verificar si el campo 'is_active' es correcto
+    Log::info('Valor de is_active para el usuario: ' . $user->is_active);
+
+    // Verificar si el usuario está activo antes de intentar autenticarlo
+    if ($user->is_active == 0) { // Usar == para comparar correctamente el valor
+        // Si está inactivo, no dejarlo iniciar sesión
+        return back()->withErrors(['login' => 'Tu cuenta está inactiva. Contacta al administrador.'])->withInput();
+    }
+
+    // Intentar autenticar al usuario (solo si está activo)
     if (!Auth::attempt($credentials)) {
         return back()->withErrors(['password' => 'Contraseña errónea'])->withInput();
     }
@@ -61,7 +70,6 @@ class LoginController extends Controller
 
     return redirect()->route('home')->with('success', 'Inicio de sesión exitoso.');
 }
-
 
     // Cerrar sesión
     public function logout(Request $request)
