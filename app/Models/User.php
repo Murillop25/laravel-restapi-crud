@@ -24,8 +24,8 @@ class User extends Authenticatable
     // Relación muchos a muchos con roles
     public function roles()
     {
-        return $this->belongsToMany(Role::class, 'role_user');
-    }
+        return $this->belongsToMany(Role::class);
+    }    
 
     // Verificar si el usuario tiene un rol específico
     public function hasRole($role)

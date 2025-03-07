@@ -47,11 +47,9 @@ Route::middleware(['auth'])->group(function () {
         Route::get('/students/list', [StudentController::class, 'listStudent'])->name('students.list');
     });
 
-    // Rutas para admin, supervisores, maestros y directores (pueden ver el editar perfil)
-    Route::middleware('role:supervisor,maestro,director,admin')->group(function () {
+    // Rutas para el editar perfil
         Route::get('/profile', [UserController::class, 'edit'])->name('profile.edit');
         Route::put('/profile', [UserController::class, 'update'])->name('profile.update');
-    });
 
     // Rutas de asignación de roles (Solo Admin)
     Route::middleware('role:admin')->group(function () {

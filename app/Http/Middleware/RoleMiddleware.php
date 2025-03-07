@@ -17,7 +17,7 @@ class RoleMiddleware
     {
 
         if(!auth()->check()){
-            return redirect('/login')->with('error','Desbes iniciar sesión');   
+            return redirect('/login')->with('error','Debes iniciar sesión');   
         }
 
         // Verificar si el usuario tiene uno de los roles permitidos

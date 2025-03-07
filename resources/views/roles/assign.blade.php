@@ -11,11 +11,13 @@
             <select name="user_id" id="user" class="form-control" required>
                 <option value="">-- Seleccione un usuario --</option>
                 @foreach($users as $user)
-                    <option value="{{ $user->id }}">{{ $user->name }} ({{ $user->email }})</option>
+                    <option value="{{ $user->id }}">
+                        {{ $user->name }} ({{ $user->email }}) - {{ $user->roles->pluck('name')->join(', ') }}
+                    </option>
                 @endforeach
             </select>
         </div>
-
+    
         <div class="mb-3">
             <label for="role" class="form-label">Seleccionar Rol:</label>
             <select name="role" id="role" class="form-control" required>
@@ -26,9 +28,9 @@
                 <option value="estudiante">Estudiante</option>
             </select>
         </div>
-
-        <button type="submit" class="btn btn-primary">Asignar Rol</button>
-    </form>
+    
+        <button type="submit" class="btn btn-primary" id="assignRoleBtn" disabled>Asignar Rol</button>
+    </form>    
 </div>
 @push('scripts')
 <script>
@@ -38,5 +40,5 @@
         showAlerts(successMessage, errorMessages);
     };
 </script>
-@endpush
+@endpush    
 @endsection
