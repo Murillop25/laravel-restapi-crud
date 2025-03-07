@@ -53,6 +53,12 @@ Route::middleware(['auth'])->group(function () {
 
     // Rutas de asignación de roles (Solo Admin)
     Route::middleware('role:admin')->group(function () {
+        // Vista principal de administración
+    Route::get('/admin/portal', [RoleController::class, 'portal'])->name('admin.portal');
+    // Acción para asignar rol y eliminar roles
+    Route::post('/admin/assign-role', [RoleController::class, 'assignRole'])->name('admin.assign.role');
+    // Acción para activar o desactivar usuario
+    Route::post('/admin/toggle-user-status', [RoleController::class, 'toggleUserStatus'])->name('admin.toggle.user.status');
         Route::get('/assign-role', [RoleController::class, 'showAssignRoleForm'])->name('assign.role');
         Route::post('/assign-role', [RoleController::class, 'assignRole'])->name('assign.role.process');
     });
