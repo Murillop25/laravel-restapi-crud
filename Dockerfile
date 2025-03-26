@@ -1,30 +1,38 @@
-# Usamos la imagen oficial de PHP con extensiones necesarias
 FROM php:8.2-fpm
 
-# Instalamos dependencias
+# Instalar dependencias del sistema
 RUN apt-get update && apt-get install -y \
-    libpng-dev \
-    libjpeg-dev \
-    libfreetype6-dev \
-    zip \
-    unzip \
     git \
     curl \
-    && docker-php-ext-install pdo pdo_mysql gd
+    libpng-dev \
+    libonig-dev \
+    libxml2-dev \
+    zip \
+    unzip \
+    nodejs \
+    npm
 
-# Instalamos Composer
+# Instalar extensiones de PHP
+RUN docker-php-ext-install pdo pdo_mysql mbstring exif pcntl bcmath gd
+
+# Instalar Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Configuramos el directorio de trabajo
+# Configurar permisos y usuario
+RUN groupadd -g 1000 www
+RUN useradd -u 1000 -ms /bin/bash -g www www
+
+# Copiar el código fuente
+COPY --chown=www:www . /var/www
+
+# Cambiar al usuario www
+USER www
+
+# Establecer directorio de trabajo
 WORKDIR /var/www
 
-# Copiamos el código del proyecto
-COPY . .
+# Instalar dependencias de PHP (opcional, puedes ejecutarlo manualmente)
+# RUN composer install --no-interaction --no-plugins --no-scripts
 
-# Instalamos dependencias de Laravel
-RUN composer install --no-dev --optimize-autoloader
-
-# Damos permisos a la carpeta de almacenamiento
-RUN chmod -R 777 storage bootstrap/cache
-
-CMD ["php-fpm"]
+# Puerto para PHP-FPM
+EXPOSE 9000

@@ -1,5 +1,5 @@
 import './bootstrap';
 import './modal';
-import './alerts';
-import './passwordToggle';
+import './alerts.js';
+import './passwordToggle.js';
 import './role';

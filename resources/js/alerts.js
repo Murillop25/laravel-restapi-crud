@@ -2,6 +2,8 @@ import { Notyf } from 'notyf';
 import 'notyf/notyf.min.css';
 import Swal from 'sweetalert2';
 
+console.log("📢 Alerts.js está cargado correctamente"); // Esto debe aparecer en la consola del navegador
+
 const notyf = new Notyf({
     position: {
         x: 'right',
